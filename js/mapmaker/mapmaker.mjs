@@ -10,15 +10,30 @@ window.onload = () => {
   canvas.width = LINE * SIZE;
   canvas.height = LINE * SIZE;
 
+  const map = Array(11).fill(Array(11).fill(""));
+  console.log(map);
+
   drawBackGround();
 
   function drawBackGround() {
-    ctx.fillStyle = "tan";
+    ctx.fillStyle = "hsl(34, 44%, 69%)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     for (let r = 0; r < LINE; r++) {
       for (let c = 0; c < LINE; c++) {
+        ctx.globalAlpha = 1.0;
+        switch (map[r][c]) {
+          case "C":
+            ctx.fillStyle = "hsl(34, 44%, 29%)";
+            break;
+          case "R":
+            ctx.fillStyle = "hsl(34, 64%, 89%)";
+            break;
+          case "M":
+            ctx.fillStyle = "hsl(34, 0%, 29%)";
+            break;
+        }
+        ctx.fillRect(c * SIZE+5, r * SIZE+5, SIZE-10, SIZE-10);
         ctx.globalAlpha = 0.1;
-        ctx.fillStyle = "brown";
         ctx.strokeRect(c * SIZE + 1, r * SIZE + 1, SIZE - 1, SIZE - 1);
       }
     }
