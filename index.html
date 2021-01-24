@@ -20,38 +20,27 @@
   <link rel="stylesheet" href="css/main.css">
 
   <meta name="theme-color" content="#fafafa">
-  <script type="module" src="js/mapmaker/mapmaker.mjs"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-  <script>
-
-
-function savePDF() {   
-  const params = new URLSearchParams(location.search);
-let seed = params.get("map");  
-var canvas = document.getElementById("map");
-  var imgData = canvas.toDataURL('image/png');              
-var doc = new jsPDF('p', 'mm', [359, 519]);
-doc.addImage(imgData, 'PNG', 0, 0, 126.7, 183);
-doc.save(`Map_${seed}.pdf`);}
-  
-  </script>
+  <script type="module" src="js/mapmaker/mapmaker.mjs"></script>
 </head>
 
 <body style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
 
-    <img src="img/LOGO.png" class="logo center">
+  <img src="img/LOGO.png" class="logo center">
 
 
-    <canvas id="map" ><div id="image">Your browser is an ancient relic. Update it!</div></canvas>
+  <canvas id="map">
+    <div id="image">Your browser is an ancient relic. Update it!</div>
+  </canvas>
   <!-- Add your site or application content here -->
   <a class="button print no-print" onclick="print()">Print!</a>
-  <a class="button pdf no-print" id="pdf" onclick="savePDF()">Save PDF</a>
+  <a class="button pdf no-print" id="pdf">Save PDF</a>
   <a class="button newmap no-print" href="./">New Map</a>
-  
+
   <footer>
     <img src="https://grokgames.com.br/wp-content/uploads/2019/10/grok_logo-280x192.png" width="70px">
     <p>Copyright 2021 © Grok Games</p>
-    
+
   </footer>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->

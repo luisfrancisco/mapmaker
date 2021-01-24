@@ -17,6 +17,8 @@ window.onload = () => {
   const LINE = 11; //number of cells per column/row
   const SIZE = 110.5; //cell size
   const canvas = document.querySelector("canvas");
+  document.querySelector("#pdf").addEventListener("click", savePDF);
+
   const ctx = canvas.getContext("2d");
   const random = getRandomBySeed();
   const ELEMENTS = {
@@ -98,7 +100,7 @@ window.onload = () => {
     ctx.font = "bolder 24px Courier";
     ctx.textAlign = "right";
     ctx.fillStyle = "#48320f";
-    ctx.fillText("("+seed+")", 1386, 398);
+    ctx.fillText("(" + seed + ")", 1386, 398);
     ctx.drawImage(shield, 637, 200);
   }
 
@@ -115,11 +117,17 @@ window.onload = () => {
       seed = seedHash;
     }
     const seedGen = new SeedGenerator({
-      seed_1: parseInt(seedHash,36),
+      seed_1: parseInt(seedHash, 36),
       seed_2_string: seedHash,
     });
     console.log(seedGen);
 
     return seedGen;
+  }
+  function savePDF() {
+    var imgData = canvas.toDataURL("image/png");
+    var doc = new jsPDF("p", "mm", [359, 519]);
+    doc.addImage(imgData, "PNG", 0, 0, 126.7, 183);
+    doc.save(`cartographers-map-${seed}.pdf`);
   }
 };
