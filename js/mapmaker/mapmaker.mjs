@@ -60,20 +60,21 @@ window.onload = () => {
   }
 
   function getRandomBySeed() {
-    let seedHash = location.hash;
-    if (seedHash.length > 0) {
-      seedHash = seedHash.substring(1, seedHash.length);
+    let seedHash = location.search;
+    if (seedHash.length > 5) {
+      seedHash = seedHash.substring(5, seedHash.length);
     } else {
       //seed aleatória
       let maxValue = 5000000;
       let minValue = 500000;
       seedHash = Math.floor(Math.random() * (maxValue - minValue)) + minValue;
-      location.hash = seedHash;
+      location.search = `?map=${seedHash}`;
     }
     const seedGen = new SeedGenerator({
       seed_1: Number(seedHash),
       seed_2_string: seedHash,
     });
+    document.querySelector("#seed").textContent = `Seed: ${seedHash}`
     return seedGen;
   }
 };
