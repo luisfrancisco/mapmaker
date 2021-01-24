@@ -1,5 +1,13 @@
 import SeedGenerator from "./SeedGenerator.mjs";
 
+const bg = new Image();
+bg.src = "img/bg/mapbase.png";
+const ruins = new Image();
+ruins.src = "img/tiles/ruina.png";
+const mountains = new Image();
+mountains.src = "img/tiles/montanha.png";
+
+
 window.onload = () => {
   const LINE = 11; //number of cells per column/row
   const SIZE = 110/3; //cell size
@@ -7,13 +15,11 @@ window.onload = () => {
   const ctx = canvas.getContext("2d");
   const random = getRandomBySeed();
   const ELEMENTS = {
-    R: { total: 8, color: "hsl(34, 44%, 29%)" },
+    R: { total: 8, color: "hsl(34, 44%, 29%)", img: ruins },
     C: { total: 6, color: "hsl(34, 64%, 89%)" },
-    M: { total: 6, color: "hsl(34, 0%, 29%)" },
+    M: { total: 6, color: "hsl(34, 0%, 29%)", img: mountains },
   };
 
-  const bg = new Image();
-  bg.src = "img/bg/mapbase.png";
 
 
   canvas.width = LINE * SIZE;
@@ -32,12 +38,11 @@ window.onload = () => {
       total--;
     }
   }
+  canvas.width = bg.width/3;
+  canvas.height = bg.height/3;
 
-  bg.addEventListener("load", ()=>{
-    canvas.width = bg.width/3;
-    canvas.height = bg.height/3;
-    drawBackGround();
-  });
+  requestAnimationFrame(drawBackGround);
+
 
   function drawBackGround() {
     ctx.fillStyle = "hsl(34, 44%, 69%)";
@@ -47,14 +52,17 @@ window.onload = () => {
     ctx.translate(143/3, 433/3);
     for (let r = 0; r < LINE; r++) {
       for (let c = 0; c < LINE; c++) {
-        console.log(r, c);
         if (map[r][c]) {
           ctx.globalAlpha = 1.0;
           ctx.fillStyle = ELEMENTS[map[r][c]].color;
-          ctx.fillRect(c * SIZE + 5, r * SIZE + 5, SIZE - 10, SIZE - 10);
+          //ctx.fillRect(c * SIZE + 5, r * SIZE + 5, SIZE - 10, SIZE - 10);
+          if(ELEMENTS[map[r][c]].img){
+
+            ctx.drawImage(ELEMENTS[map[r][c]].img, c * SIZE + 0, r * SIZE + 0, SIZE -0, SIZE - 0);
+          }
         }
-        ctx.globalAlpha = 0.1;
-        ctx.strokeRect(c * SIZE + 1, r * SIZE + 1, SIZE - 1, SIZE - 1);
+        //ctx.globalAlpha = 0.1;
+        //ctx.strokeRect(c * SIZE + 1, r * SIZE + 1, SIZE - 1, SIZE - 1);
       }
     }
   }
