@@ -22,7 +22,7 @@ header {
 }
 
 :root {
-  --ratio: calc(360 / 1496);
+  --ratio: calc(320 / 1496);
   --ratiop: calc((12.67cm / 1496px) * (96px / 2.54cm));
 }
 
@@ -319,6 +319,54 @@ textarea {
     width: 80%;
     max-width: 600px;
   }
+
+  .button {
+    width: auto;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px 10px;
+  }
+
+  .btn-text{
+    display:none
+  }
+
+  .button.newmap:before {
+      content: "\0000a0";
+      display: inline-block;
+      height: 24px;
+      width: 24px;
+      line-height: 24px;
+      position: relative;
+      top: 0px;
+      left:0px;
+      margin: auto;
+  }
+  .button.pdf:before {
+    content: "\0000a0";
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    position: relative;
+    top: 0px;
+    left:0px;
+    margin: auto;
+
+  }
+  .button.print:before {
+    content: "\0000a0";
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    position: relative;
+    top: 0px;
+    left:0px;
+    margin: auto;
+  }
+
 }
 
 @media print,
