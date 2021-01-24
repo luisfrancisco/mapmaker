@@ -24,17 +24,19 @@ header{margin:auto}
 canvas {
   zoom: calc( 400 / 1496);
 }
+
 .logo {
   width:50%; 
   max-width: 600px;
  }
 
-
+.actions{
+  margin-bottom: 2em;
+}
   footer {margin-top:40px;text-align: center; color:#2c64a9;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-size: 0.6em;}
 
   .button {
     width: 150px;
-    margin-top: 1.5em;
     display: inline-block;
     text-align: center;
     vertical-align: middle;

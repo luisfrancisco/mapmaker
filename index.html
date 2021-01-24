@@ -27,15 +27,17 @@
 <body style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
 
   <img src="img/LOGO.png" class="logo center">
-
+  
+  <div class="actions">
+    <a class="button print no-print" onclick="print()">Print!</a>
+    <a class="button pdf no-print" id="pdf">Save PDF</a>
+    <a class="button newmap no-print" href="./">New Map</a>
+  </div>
 
   <canvas id="map">
     <div id="image">Your browser is an ancient relic. Update it!</div>
   </canvas>
-  <!-- Add your site or application content here -->
-  <a class="button print no-print" onclick="print()">Print!</a>
-  <a class="button pdf no-print" id="pdf">Save PDF</a>
-  <a class="button newmap no-print" href="./">New Map</a>
+
 
   <footer>
     <img src="https://grokgames.com.br/wp-content/uploads/2019/10/grok_logo-280x192.png" width="70px">
