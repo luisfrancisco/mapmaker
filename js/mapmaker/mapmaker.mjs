@@ -51,11 +51,22 @@ window.onload = () => {
     .fill()
     .map(() => Array(LINE).fill(""));
   for (const k in ELEMENTS) {
+    let ur = new Set();
+    let uc = new Set();
+
     let total = ELEMENTS[k].total;
     while (total > 0) {
       const r = random.randInt(0, 10);
       const c = random.randInt(0, 10);
       if (map[r][c]) continue;
+      if (k === "M") {
+        if (ur.has(r) || uc.has(c)) {
+          continue;
+        } else {
+          ur.add(r);
+          uc.add(c);
+        }
+      }
       map[r][c] = k;
       total--;
     }
