@@ -18,16 +18,20 @@ window.onload = () => {
   const random = getRandomBySeed();
   const ELEMENTS = {
     R: {
-      total: 8,
+      total: random.randInt(6, 8),
       color: "hsl(34, 44%, 29%)",
       img: ruins,
       filter: () => {
         ctx.globalCompositeOperation = "color-burn";
       },
     },
-    C: { total: 6, color: "hsl(34, 64%, 89%)", filter: () => {} },
+    C: {
+      total: random.randInt(7, 10),
+      color: "hsl(34, 64%, 89%)",
+      filter: () => {},
+    },
     M: {
-      total: 6,
+      total: random.randInt(5, 7),
       color: "hsl(34, 0%, 29%)",
       img: mountains,
       filter: () => {},
@@ -73,10 +77,10 @@ window.onload = () => {
             ELEMENTS[map[r][c]].filter();
             ctx.drawImage(
               ELEMENTS[map[r][c]].img,
-              c * SIZE -3,
-              r * SIZE -3,
-              SIZE +6,
-              SIZE +6
+              c * SIZE - 3,
+              r * SIZE - 3,
+              SIZE + 6,
+              SIZE + 6
             );
             ctx.restore();
           }
