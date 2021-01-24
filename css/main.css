@@ -32,6 +32,10 @@ canvas {
 
 .actions{
   margin-bottom: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
   footer {margin-top:40px;text-align: center; color:#2c64a9;font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;font-size: 0.6em;}
 
