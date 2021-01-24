@@ -6,7 +6,10 @@ const ruins = new Image();
 ruins.src = "img/tiles/ruina.png";
 const mountains = new Image();
 mountains.src = "img/tiles/montanha.png";
-let seed = new URLSearchParams(location.search).get("map");
+const cliffs = new Image();
+cliffs.src = "img/tiles/cliff.png";
+const params = new URLSearchParams(location.search);
+let seed = params.get("map");
 const shield = new Image();
 shield.src = "img/bg/shield.png";
 
@@ -18,7 +21,7 @@ window.onload = () => {
   const random = getRandomBySeed();
   const ELEMENTS = {
     R: {
-      total: random.randInt(6, 8),
+      total: params.get("ruins") ?? random.randInt(6, 8),
       color: "hsl(34, 44%, 29%)",
       img: ruins,
       filter: () => {
@@ -26,12 +29,13 @@ window.onload = () => {
       },
     },
     C: {
-      total: random.randInt(7, 10),
+      total: params.get("cliffs") ?? 0,
       color: "hsl(34, 64%, 89%)",
+      img: cliffs,
       filter: () => {},
     },
     M: {
-      total: random.randInt(5, 7),
+      total: params.get("mountains") ?? random.randInt(5, 7),
       color: "hsl(34, 0%, 29%)",
       img: mountains,
       filter: () => {},
