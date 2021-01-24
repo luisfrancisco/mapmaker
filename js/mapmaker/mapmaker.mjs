@@ -28,16 +28,16 @@ window.onload = () => {
         ctx.globalCompositeOperation = "color-burn";
       },
     },
-    C: {
-      total: params.get("cliffs") ?? 0,
-      color: "hsl(34, 64%, 89%)",
-      img: cliffs,
-      filter: () => {},
-    },
     M: {
       total: params.get("mountains") ?? random.randInt(5, 7),
       color: "hsl(34, 0%, 29%)",
       img: mountains,
+      filter: () => {},
+    },
+    C: {
+      total: params.get("cliffs") ?? 0,
+      color: "hsl(34, 64%, 89%)",
+      img: cliffs,
       filter: () => {},
     },
   };
