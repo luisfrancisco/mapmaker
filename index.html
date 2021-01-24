@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>Cartographers Map Generator</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device -width, initial-scale=1">
 
@@ -26,16 +26,20 @@
 </head>
 
 <body style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
-  <header>
+
     <img src="img/LOGO.png" class="logo center">
-  </header>
+
 
     <canvas >Your browser is an ancient relic. Update it!</canvas>
   <!-- Add your site or application content here -->
-  <a class="button print" onclick="print()">Print!</a>
-  <a class="button newmap" href="./">New Map!</a>
- <p id="seed" class="center"></p>
-
+  <a class="button print no-print" onclick="print()">Print!</a>
+  <a class="button newmap no-print" href="./">New Map</a>
+  
+  <footer>
+    <img src="https://grokgames.com.br/wp-content/uploads/2019/10/grok_logo-280x192.png" width="70px">
+    <p>Copyright 2021 © Grok Games</p>
+    
+  </footer>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>
@@ -43,6 +47,8 @@
     ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
   </script>
   <script src="https://www.google-analytics.com/analytics.js" async></script>
+
+
 </body>
 
 </html>

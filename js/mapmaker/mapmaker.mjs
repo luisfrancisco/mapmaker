@@ -98,7 +98,7 @@ window.onload = () => {
     ctx.font = "bolder 24px Courier";
     ctx.textAlign = "right";
     ctx.fillStyle = "#48320f";
-    ctx.fillText(seed, 1379, 401);
+    ctx.fillText("("+seed+")", 1386, 398);
     ctx.drawImage(shield, 637, 200);
   }
 
@@ -108,16 +108,18 @@ window.onload = () => {
       seedHash = seed;
     } else {
       //seed aleatória
-      let maxValue = 5000000;
-      let minValue = 500000;
+      let maxValue = 999999;
+      let minValue = 99;
       seedHash = Math.floor(Math.random() * (maxValue - minValue)) + minValue;
       location.search = `?map=${seedHash}`;
       seed = seedHash;
     }
     const seedGen = new SeedGenerator({
-      seed_1: Number(seedHash),
+      seed_1: parseInt(seedHash,36),
       seed_2_string: seedHash,
     });
+    console.log(seedGen);
+
     return seedGen;
   }
 };
