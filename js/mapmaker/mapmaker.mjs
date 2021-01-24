@@ -92,13 +92,22 @@ window.onload = () => {
           if (ELEMENTS[map[r][c]].img) {
             ctx.save();
             ELEMENTS[map[r][c]].filter();
-            ctx.drawImage(
-              ELEMENTS[map[r][c]].img,
-              c * SIZE - 3,
-              r * SIZE - 3,
-              SIZE + 6,
-              SIZE + 6
-            );
+            if (map[r][c] === "C") 
+              ctx.drawImage(
+                ELEMENTS[map[r][c]].img,
+                c * SIZE - 10,
+                r * SIZE - 10,
+                SIZE + 20,
+                SIZE + 20
+              );
+             else
+              ctx.drawImage(
+                ELEMENTS[map[r][c]].img,
+                c * SIZE - 3,
+                r * SIZE - 3,
+                SIZE + 6,
+                SIZE + 6
+              );
             ctx.restore();
           }
         }
