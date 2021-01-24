@@ -79,6 +79,7 @@ footer {
   font: normal normal bold 18px trebuchet ms;
   color: #000000;
   text-decoration: none;
+  margin:10px;
 }
 .button:hover,
 .button:focus {
@@ -311,6 +312,15 @@ textarea {
 
 @media only screen and (min-width: 35em) {
   /* Style adjustments for viewports that meet the condition */
+}
+
+@media only screen and (max-width: 600px) {
+
+.logo {
+  width: 80%;
+  max-width: 600px;
+}
+
 }
 
 @media print,
