@@ -23,7 +23,10 @@ window.onload = () => {
   const random = getRandomBySeed();
   const ELEMENTS = {
     R: {
-      total: params.get("ruins") ?? random.randInt(6, 8),
+      total: Math.min(
+        Math.max(params.get("ruins") ?? random.randInt(6, 8), 0),
+        10
+      ),
       color: "hsl(34, 44%, 29%)",
       img: ruins,
       filter: () => {
@@ -31,13 +34,16 @@ window.onload = () => {
       },
     },
     M: {
-      total: params.get("mountains") ?? random.randInt(5, 7),
+      total: Math.min(
+        Math.max(params.get("mountains") ?? random.randInt(5, 7), 0),
+        10
+      ),
       color: "hsl(34, 0%, 29%)",
       img: mountains,
       filter: () => {},
     },
     C: {
-      total: params.get("cliffs") ?? 0,
+      total: Math.min(Math.max(params.get("cliffs") ?? 0, 0), 10),
       color: "hsl(34, 64%, 89%)",
       img: cliffs,
       filter: () => {},
