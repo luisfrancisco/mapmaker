@@ -23,7 +23,7 @@ header {
 
 :root {
   --ratio: calc(360 / 1496);
-  --ratiov: 360 / 1496;
+  --ratiop: calc((12.67cm / 1496px) * (96px / 2.54cm));
 }
 
 canvas {
@@ -79,7 +79,7 @@ footer {
   font: normal normal bold 18px trebuchet ms;
   color: #000000;
   text-decoration: none;
-  margin:10px;
+  margin: 10px;
 }
 .button:hover,
 .button:focus {
@@ -315,12 +315,10 @@ textarea {
 }
 
 @media only screen and (max-width: 600px) {
-
-.logo {
-  width: 80%;
-  max-width: 600px;
-}
-
+  .logo {
+    width: 80%;
+    max-width: 600px;
+  }
 }
 
 @media print,
@@ -409,8 +407,13 @@ textarea {
     page-break-after: avoid;
   }
 
+  #map {
+    width: 12.67cm;
+    height: 18.3cm;
+  }
+
   canvas {
-    zoom: 1;
+    transform: scale(1);
     width: 12.67cm;
     height: 18.3cm;
   }
