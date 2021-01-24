@@ -21,8 +21,20 @@ header {
   margin: auto;
 }
 
+:root {
+  --ratio: calc(360 / 1496);
+  --ratiov: 360 / 1496;
+}
+
 canvas {
-  zoom: calc(400 / 1496);
+  transform: scale(var(--ratio));
+  transform-origin: top left;
+}
+
+#map {
+  width: calc(1496px * var(--ratio));
+  height: calc(2161px * var(--ratio));
+  overflow: hidden;
 }
 
 .logo {
@@ -386,6 +398,7 @@ textarea {
   h3 {
     page-break-after: avoid;
   }
+
   canvas {
     zoom: 1;
     width: 12.67cm;
