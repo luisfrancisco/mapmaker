@@ -7,6 +7,8 @@ ruins.src = "img/tiles/ruina.png";
 const mountains = new Image();
 mountains.src = "img/tiles/montanha.png";
 let seed = new URLSearchParams(location.search).get("map");
+const shield = new Image();
+shield.src = "img/bg/shield.png";
 
 window.onload = () => {
   const LINE = 11; //number of cells per column/row
@@ -23,8 +25,13 @@ window.onload = () => {
         ctx.globalCompositeOperation = "color-burn";
       },
     },
-    C: { total: 6, color: "hsl(34, 64%, 89%)", filter: ()=>{} },
-    M: { total: 6, color: "hsl(34, 0%, 29%)", img: mountains, filter: ()=>{} },
+    C: { total: 6, color: "hsl(34, 64%, 89%)", filter: () => {} },
+    M: {
+      total: 6,
+      color: "hsl(34, 0%, 29%)",
+      img: mountains,
+      filter: () => {},
+    },
   };
 
   canvas.width = LINE * SIZE;
@@ -43,7 +50,7 @@ window.onload = () => {
       total--;
     }
   }
-  
+
   canvas.width = bg.width;
   canvas.height = bg.height;
 
@@ -54,7 +61,7 @@ window.onload = () => {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(bg, 0, 0, bg.width, bg.height);
     ctx.save();
-    ctx.translate(143, 433);
+    ctx.translate(142, 433);
     for (let r = 0; r < LINE; r++) {
       for (let c = 0; c < LINE; c++) {
         if (map[r][c]) {
@@ -62,14 +69,14 @@ window.onload = () => {
           ctx.fillStyle = ELEMENTS[map[r][c]].color;
           //ctx.fillRect(c * SIZE + 5, r * SIZE + 5, SIZE - 10, SIZE - 10);
           if (ELEMENTS[map[r][c]].img) {
-              ctx.save();
-              ELEMENTS[map[r][c]].filter();
+            ctx.save();
+            ELEMENTS[map[r][c]].filter();
             ctx.drawImage(
               ELEMENTS[map[r][c]].img,
-              c * SIZE + 0,
-              r * SIZE + 0,
-              SIZE - 0,
-              SIZE - 0
+              c * SIZE -3,
+              r * SIZE -3,
+              SIZE +6,
+              SIZE +6
             );
             ctx.restore();
           }
@@ -84,6 +91,7 @@ window.onload = () => {
     ctx.textAlign = "right";
     ctx.fillStyle = "#48320f";
     ctx.fillText(seed, 1379, 401);
+    ctx.drawImage(shield, 637, 200);
   }
 
   function getRandomBySeed() {
