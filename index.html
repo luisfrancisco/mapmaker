@@ -1,39 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8" />
+    <title>Cartographers Map Generator</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device -width, initial-scale=1" />
 
-<head>
-  <meta charset="utf-8">
-  <title>Cartographers Map Generator</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device -width, initial-scale=1">
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
 
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <!-- Place favicon.ico in the root directory -->
 
-  <link rel="manifest" href="site.webmanifest">
-  <link rel="apple-touch-icon" href="icon.png">
-  <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/main.css" />
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
+    <meta name="theme-color" content="#fafafa" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script type="module" src="js/mapmaker/mapmaker.mjs"></script>
+  </head>
 
-  <meta name="theme-color" content="#fafafa">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-  <script type="module" src="js/mapmaker/mapmaker.mjs"></script>
-</head>
+  <body
+    style="
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    "
+  >
+    <img src="img/LOGO.png" class="logo center" />
 
-<body style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
-
-  <img src="img/LOGO.png" class="logo center">
-
-  <div class="actions">
-    <a class="button print no-print" onclick="print()">Print!</a>
-    <a class="button pdf no-print" id="pdf">Save PDF</a>
-    <a class="button newmap no-print" href="./">New Map</a>
-  </div>
-
+    <div class="actions">
+      <a class="button print no-print" onclick="print()">Print!</a>
+      <a class="button pdf no-print" id="pdf">Save PDF</a>
+      <a class="button newmap no-print" href="./">New Map</a>
+    </div>
 
     <div id="map">
       <canvas>
@@ -41,21 +45,26 @@
       </canvas>
     </div>
 
+    <footer>
+      <img
+        src="https://grokgames.com.br/wp-content/uploads/2019/10/grok_logo-280x192.png"
+        width="70px"
+      />
+      <p>Copyright 2021 © Grok Games</p>
+    </footer>
 
-  <footer>
-    <img src="https://grokgames.com.br/wp-content/uploads/2019/10/grok_logo-280x192.png" width="70px">
-    <p>Copyright 2021 © Grok Games</p>
-
-  </footer>
-
-  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-  <script>
-    window.ga = function () { ga.q.push(arguments) }; ga.q = []; ga.l = +new Date;
-    ga('create', 'UA-XXXXX-Y', 'auto'); ga('set', 'anonymizeIp', true); ga('set', 'transport', 'beacon'); ga('send', 'pageview')
-  </script>
-  <script src="https://www.google-analytics.com/analytics.js" async></script>
-
-
-</body>
-
+    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+    <script>
+      window.ga = function () {
+        ga.q.push(arguments);
+      };
+      ga.q = [];
+      ga.l = +new Date();
+      ga("create", "UA-XXXXX-Y", "auto");
+      ga("set", "anonymizeIp", true);
+      ga("set", "transport", "beacon");
+      ga("send", "pageview");
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async></script>
+  </body>
 </html>

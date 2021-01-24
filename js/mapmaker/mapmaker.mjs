@@ -139,6 +139,6 @@ window.onload = () => {
     var imgData = canvas.toDataURL("image/png");
     var doc = new jsPDF("p", "mm", [359, 519]);
     doc.addImage(imgData, "PNG", 0, 0, 126.7, 183);
-    doc.save(`cartographers-map-${seed}.pdf`);
+    doc.save(`map-${seed}.pdf`);
   }
 };
