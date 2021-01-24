@@ -43,13 +43,13 @@ window.onload = () => {
       total--;
     }
   }
+  
   canvas.width = bg.width;
   canvas.height = bg.height;
 
   requestAnimationFrame(drawBackGround);
 
   function drawBackGround() {
-    ctx.scale(1, 1);
     ctx.fillStyle = "hsl(34, 44%, 69%)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(bg, 0, 0, bg.width, bg.height);

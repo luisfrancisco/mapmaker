@@ -23,7 +23,9 @@ header{margin:auto}
   display: flex; /* or inline-flex */
 }
 
-
+canvas {
+  zoom: calc( 500 / 1496);
+}
 .center {
   text-align: center;
   display: block;
@@ -331,6 +333,11 @@ textarea {
   h2,
   h3 {
     page-break-after: avoid;
+  }
+  canvas{
+    zoom: 1;
+    width: 12.67cm;
+    height: 18.3cm;
   }
 }
 
