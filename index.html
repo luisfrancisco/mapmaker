@@ -26,11 +26,13 @@
 
 
 function savePDF() {   
+  const params = new URLSearchParams(location.search);
+let seed = params.get("map");  
 var canvas = document.getElementById("map");
   var imgData = canvas.toDataURL('image/png');              
 var doc = new jsPDF('p', 'mm', [359, 519]);
 doc.addImage(imgData, 'PNG', 0, 0, 126.7, 183);
-doc.save('sample-file.pdf');}
+doc.save(`Map_${seed}.pdf`);}
   
   </script>
 </head>
