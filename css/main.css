@@ -35,11 +35,38 @@ canvas {
   width: calc(1496px * var(--ratio));
   height: calc(2161px * var(--ratio));
   overflow: hidden;
+  position: relative;
 }
 
 .logo {
   width: 50%;
   max-width: 600px;
+}
+@keyframes lpLogoAnim {
+  from {
+    transform: rotate(-30deg);
+  }
+  to {
+    transform: rotate(330deg);
+  }
+}
+
+.loader {
+  z-index:-1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 64px;
+  width: 64px;
+  margin-top: -32px;
+  margin-left: -32px;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNjAgMTIwQzI2Ljg2MyAxMjAgMCA5My4xMzcgMCA2MFMyNi44NjMgMCA2MCAwczYwIDI2Ljg2MyA2MCA2MC0yNi44NjMgNjAtNjAgNjB6bTAtMTJjMjYuNTEgMCA0OC0yMS40OSA0OC00OFM4Ni41MSAxMiA2MCAxMiAxMiAzMy40OSAxMiA2MHMyMS40OSA0OCA0OCA0OHpNNDkuMTYgNjcuNzk2bDYuMTUyLTIuNThhNyA3IDAgMCAwIDExLjY2NS00Ljg5M2w2LjE0OS0yLjU4YTEuOTk5IDEuOTk5IDAgMCAxIDIuNzcyIDEuODAzbC4wMDEgMzMuNjFhMiAyIDAgMCAxLTMuNDMgMS40MzlMNDguNTAyIDcxLjAzN2EyIDIgMCAwIDEgLjY1OC0zLjI0em0yMS42NDYtMTUuNTlsLTYuMTUzIDIuNTgyYTcgNyAwIDAgMC0xMS42NjUgNC44OTNMNDYuODQgNjIuMjZhMS45OTkgMS45OTkgMCAwIDEtMi43NzItMS44MDJsLS4wMDEtMzMuNjFhMiAyIDAgMCAxIDMuNDMtMS40NGwyMy45NjggMjMuNTU4YTIgMiAwIDAgMS0uNjU4IDMuMjR6IiBmaWxsPSIjOGE5OWFkIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4=);
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation-duration: 4s;
+  animation-name: lpLogoAnim;
+  animation-iteration-count: 20;
+  transform-origin: 50% 50%;
 }
 
 .actions {
