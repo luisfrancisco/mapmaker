@@ -128,6 +128,7 @@ window.onload = () => {
       document.querySelectorAll("img").forEach((i) => (i.style.opacity = 1.0));
       document.querySelector("canvas").style.opacity = 1.0;
       document.querySelector(".actions").style.opacity = 1.0;
+      document.querySelector(".loader").style.opacity = 0.0;
     } else {
       //seed aleatória
       let maxValue = 999999;
