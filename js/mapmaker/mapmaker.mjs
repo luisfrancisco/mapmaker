@@ -141,7 +141,6 @@ window.onload = () => {
       seed_1: parseInt(seedHash, 36),
       seed_2_string: seedHash,
     });
-    console.log(seedGen);
 
     return seedGen;
   }
