@@ -12,7 +12,7 @@
     <meta property="og:image" content="" />
 
     <link rel="manifest" href="site.webmanifest" />
-    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="apple-touch-icon" href="favicon.ico" />
     <!-- Place favicon.ico in the root directory -->
 
     <link rel="stylesheet" href="css/normalize.css" />
@@ -23,14 +23,8 @@
     <script type="module" src="js/mapmaker/mapmaker.mjs"></script>
   </head>
 
-  <body
-    style="
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    "
-  >
+  <body>
+    <div class="loader"></div>
     <img src="img/LOGO.png" class="logo center" />
 
     <div class="actions">
@@ -41,11 +35,9 @@
 
 
     <div id="map">
-      <div class="loader"></div>
       <canvas>
         <div id="image">Your browser is an ancient relic. Update it!</div>
       </canvas>
-
     </div>
 
     <footer>

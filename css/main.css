@@ -17,10 +17,21 @@ html {
   line-height: 1.4;
   background-color: #021222;
 }
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 header {
   margin: auto;
 }
 
+img,
+.actions, canvas {
+  opacity: 0;
+  transition: opacity 0.5s ease-in;
+}
 :root {
   --ratio: calc(320 / 1496);
   --ratiop: calc((12.67cm / 1496px) * (96px / 2.54cm));
@@ -52,7 +63,7 @@ canvas {
 }
 
 .loader {
-  z-index:-1;
+  z-index: -1;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -355,20 +366,20 @@ textarea {
     padding: 10px 10px;
   }
 
-  .btn-text{
-    display:none
+  .btn-text {
+    display: none;
   }
 
   .button.newmap:before {
-      content: "\0000a0";
-      display: inline-block;
-      height: 24px;
-      width: 24px;
-      line-height: 24px;
-      position: relative;
-      top: 0px;
-      left:0px;
-      margin: auto;
+    content: "\0000a0";
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    margin: auto;
   }
   .button.pdf:before {
     content: "\0000a0";
@@ -378,9 +389,8 @@ textarea {
     line-height: 24px;
     position: relative;
     top: 0px;
-    left:0px;
+    left: 0px;
     margin: auto;
-
   }
   .button.print:before {
     content: "\0000a0";
@@ -390,10 +400,9 @@ textarea {
     line-height: 24px;
     position: relative;
     top: 0px;
-    left:0px;
+    left: 0px;
     margin: auto;
   }
-
 }
 
 @media print,

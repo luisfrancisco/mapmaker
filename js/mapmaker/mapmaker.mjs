@@ -125,6 +125,9 @@ window.onload = () => {
     let seedHash;
     if (seed) {
       seedHash = seed;
+      document.querySelectorAll("img").forEach((i) => (i.style.opacity = 1.0));
+      document.querySelector("canvas").style.opacity = 1.0;
+      document.querySelector(".actions").style.opacity = 1.0;
     } else {
       //seed aleatória
       let maxValue = 999999;
