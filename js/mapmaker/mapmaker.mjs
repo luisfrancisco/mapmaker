@@ -84,6 +84,17 @@ window.onload = () => {
         ctx.globalCompositeOperation = "multiply";
       },
     },
+    B: {
+      total: params.get("big") ? 1 : 0,
+      color: "hsl(34, 64%, 89%)",
+      img: cliffBig,
+      width: 3 * SIZE ,
+      height: 5 * SIZE,
+      dc: -1,
+      filter: () => {
+        ctx.globalCompositeOperation = "multiply";
+      },
+    },
   };
 
   canvas.width = LINE * SIZE;
@@ -110,24 +121,48 @@ window.onload = () => {
         }
       }
       if (k === "L") {
-        if (r===10 || c ===10 || map[r][c + 1] || map[r + 1][c]) {
+        if (r === 10 || c === 10 || map[r][c + 1] || map[r + 1][c]) {
           continue;
         }
         map[r][c + 1] = "X";
         map[r + 1][c] = "X";
       }
-      if (r===10 || k === "NS") {
+      if (r === 10 || k === "NS") {
         if (map[r + 1][c]) {
           continue;
         }
         map[r + 1][c] = "X";
       }
-      if (c ===10 || k === "WE") {
+      if (c === 10 || k === "WE") {
         if (map[r][c + 1]) {
           continue;
         }
         map[r][c + 1] = "X";
       }
+      if (k === "B") {
+        if (
+          r > 5 ||
+          c === 10 || c===0||
+          map[r][c + 1] ||
+          map[r][c + 2] ||
+          map[r][c + 3] ||
+          map[r][c + 4] ||
+          map[r + 1][c - 1] ||
+          map[r + 2][c - 1] ||
+          map[r + 2][c + 1]
+        ) {
+          continue;
+        }
+        map[r + 1][c] = "X";
+        map[r + 2][c] = "X";
+        map[r + 3][c] = "X";
+        map[r + 4][c] = "X";
+        map[r + 1][c - 1] = "X";
+        map[r + 2][c - 1] = "X";
+        map[r + 3][c - 1] = "X";
+        map[r + 3][c + 1] = "X";
+      }
+
       map[r][c] = k;
       total--;
     }
@@ -146,7 +181,7 @@ window.onload = () => {
     ctx.translate(142, 433);
     for (let r = 0; r < LINE; r++) {
       for (let c = 0; c < LINE; c++) {
-        if (map[r][c] && map[r][c]!=='X') {
+        if (map[r][c] && map[r][c] !== "X") {
           ctx.globalAlpha = 1.0;
           ctx.fillStyle = ELEMENTS[map[r][c]].color;
           //ctx.fillRect(c * SIZE + 5, r * SIZE + 5, SIZE - 10, SIZE - 10);
@@ -155,7 +190,7 @@ window.onload = () => {
             ELEMENTS[map[r][c]].filter();
             ctx.drawImage(
               ELEMENTS[map[r][c]].img,
-              c * SIZE - 3,
+              (c+(ELEMENTS[map[r][c]].dc ?? 0)) * SIZE - 3,
               r * SIZE - 3,
               ELEMENTS[map[r][c]].width ?? SIZE + 6,
               ELEMENTS[map[r][c]].height ?? SIZE + 6
@@ -163,6 +198,9 @@ window.onload = () => {
             ctx.restore();
           }
         }
+        // ctx.fillStyle = "black";
+        // ctx.font="30px Arial";
+        // ctx.fillText(`c${c}r${r}:${map[r][c]}`,  c * SIZE+30,r * SIZE+30);
         //ctx.globalAlpha = 0.1;
         // ctx.strokeStyle = "black";
         // ctx.strokeRect(c * SIZE + 1, r * SIZE + 1, SIZE - 1, SIZE - 1);
