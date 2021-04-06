@@ -12,6 +12,14 @@ const params = new URLSearchParams(location.search);
 let seed = params.get("map");
 const shield = new Image();
 shield.src = "img/bg/shield.png";
+const cliffNS = new Image();
+cliffNS.src = "img/tiles/cliff-ns.png";
+const cliffWE = new Image();
+cliffWE.src = "img/tiles/cliff-we.png";
+const cliffL = new Image();
+cliffL.src = "img/tiles/cliff-l.png";
+const cliffBig = new Image();
+cliffBig.src = "img/tiles/cliff-big.png";
 
 window.onload = () => {
   const LINE = 11; //number of cells per column/row
@@ -48,6 +56,34 @@ window.onload = () => {
       img: cliffs,
       filter: () => {},
     },
+    NS: {
+      total: params.get("heroes") ? 1 : 0,
+      color: "hsl(34, 64%, 89%)",
+      img: cliffNS,
+      height: 2 * SIZE + 12,
+      filter: () => {
+        ctx.globalCompositeOperation = "multiply";
+      },
+    },
+    WE: {
+      total: params.get("heroes") ? 1 : 0,
+      color: "hsl(34, 64%, 89%)",
+      img: cliffWE,
+      width: 2 * SIZE + 12,
+      filter: () => {
+        ctx.globalCompositeOperation = "multiply";
+      },
+    },
+    L: {
+      total: params.get("heroes") ? 1 : 0,
+      color: "hsl(34, 64%, 89%)",
+      img: cliffL,
+      width: 2 * SIZE + 12,
+      height: 2 * SIZE + 12,
+      filter: () => {
+        ctx.globalCompositeOperation = "multiply";
+      },
+    },
   };
 
   canvas.width = LINE * SIZE;
@@ -73,6 +109,25 @@ window.onload = () => {
           uc.add(c);
         }
       }
+      if (k === "L") {
+        if (r===10 || c ===10 || map[r][c + 1] || map[r + 1][c]) {
+          continue;
+        }
+        map[r][c + 1] = "X";
+        map[r + 1][c] = "X";
+      }
+      if (r===10 || k === "NS") {
+        if (map[r + 1][c]) {
+          continue;
+        }
+        map[r + 1][c] = "X";
+      }
+      if (c ===10 || k === "WE") {
+        if (map[r][c + 1]) {
+          continue;
+        }
+        map[r][c + 1] = "X";
+      }
       map[r][c] = k;
       total--;
     }
@@ -91,7 +146,7 @@ window.onload = () => {
     ctx.translate(142, 433);
     for (let r = 0; r < LINE; r++) {
       for (let c = 0; c < LINE; c++) {
-        if (map[r][c]) {
+        if (map[r][c] && map[r][c]!=='X') {
           ctx.globalAlpha = 1.0;
           ctx.fillStyle = ELEMENTS[map[r][c]].color;
           //ctx.fillRect(c * SIZE + 5, r * SIZE + 5, SIZE - 10, SIZE - 10);
@@ -102,8 +157,8 @@ window.onload = () => {
               ELEMENTS[map[r][c]].img,
               c * SIZE - 3,
               r * SIZE - 3,
-              SIZE + 6,
-              SIZE + 6
+              ELEMENTS[map[r][c]].width ?? SIZE + 6,
+              ELEMENTS[map[r][c]].height ?? SIZE + 6
             );
             ctx.restore();
           }
