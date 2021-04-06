@@ -89,7 +89,7 @@ window.onload = () => {
       color: "hsl(34, 64%, 89%)",
       img: cliffBig,
       width: 3 * SIZE ,
-      height: 5 * SIZE,
+      height: 4 * SIZE,
       dc: -1,
       filter: () => {
         ctx.globalCompositeOperation = "multiply";
@@ -156,11 +156,9 @@ window.onload = () => {
         map[r + 1][c] = "X";
         map[r + 2][c] = "X";
         map[r + 3][c] = "X";
-        map[r + 4][c] = "X";
         map[r + 1][c - 1] = "X";
         map[r + 2][c - 1] = "X";
-        map[r + 3][c - 1] = "X";
-        map[r + 3][c + 1] = "X";
+        map[r + 2][c + 1] = "X";
       }
 
       map[r][c] = k;
