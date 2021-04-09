@@ -114,7 +114,10 @@ window.onload = () => {
 
     let total = ELEMENTS[k].total;
     if (k == "C") {
-      randomWalk(3, 3, ELEMENTS[k].total);
+      let t = ELEMENTS[k].total;
+      while(t>0){
+        t-=randomWalk(t);
+      }
       continue;
     }
     let km = 0;
@@ -257,9 +260,11 @@ window.onload = () => {
     doc.addImage(imgData, "PNG", 0, 0, 126.7, 183);
     doc.save(`map-${seed}.pdf`);
   }
-  function randomWalk(r, c, t) {
-    let nr = random.randInt(0, 10);
-    let nc = random.randInt(0, 10);
+  function randomWalk(t) {
+    let r = random.randInt(0, 10);
+    let c = random.randInt(0, 10);
+    let nr = r;
+    let nc = c;
     let d = random.randInt(0, 3);
     let v = [
       [1, 0],
@@ -269,7 +274,7 @@ window.onload = () => {
     ];
     let vr = v[d][0];
     let vc = v[d][1];
-    t = 0;
+    let placed = 0;
     let s = 0;
     let pd = d;
     do {
@@ -278,7 +283,7 @@ window.onload = () => {
       vc = v[d][1];
       nr = Math.max(Math.min(r + vr, 10), 0);
       nc = Math.max(Math.min(c + vc, 10), 0);
-      //console.log(`${s}: ${r}(${vr}) ${c}(${vc})`);
+      //console.log(`${s} ${t}: ${r}(${vr}) ${c}(${vc})`);
       s++;
       if (pd == d || map[nr][nc] != "") {
         continue;
@@ -286,9 +291,10 @@ window.onload = () => {
       r = nr;
       c = nc;
       map[r][c] = "C";
-      t++;
+      placed++;
       pd = d;
-    } while (t < 10 && s < 100);
+    } while (placed < t && s < 100);
+    return placed;
   }
   function drawCliff(ctx, r, c, SIZE) {
     ctx.globalAlpha = 1.0;
