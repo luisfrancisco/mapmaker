@@ -87,15 +87,18 @@ canvas {
   justify-content: center;
   flex-wrap: wrap;
 }
-footer {
+footer, footer  a {
   margin-top: 40px;
   text-align: center;
   color: #2c64a9;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-  font-size: 0.6em;
+  font-size: 0.6rem;
 }
 
+footer a{
+  text-decoration: none;
+}
 .button {
   width: 150px;
   display: inline-block;
