@@ -6,29 +6,32 @@ const ruins = new Image();
 ruins.src = "img/tiles/ruina.png";
 const mountains = new Image();
 mountains.src = "img/tiles/montanha.png";
-const cliffs = new Image();
-cliffs.src = "img/tiles/cliff.png";
 const params = new URLSearchParams(location.search);
-let seed = params.get("map");
+const SEED = params.get("map");
+const CLIFFS = Math.min(Math.max(params.get("cliffs") ?? 0, 0), 20);
+const HEROES = Math.min(Math.max(params.get("heroes") ?? 0, 0), 1);
+const BIG = Math.min(Math.max(params.get("big") ?? 0, 0), 1);
+
 const shield = new Image();
 shield.src = "img/bg/shield.png";
-const cliffNS = new Image();
-cliffNS.src = "img/tiles/cliff-ns.png";
-const cliffWE = new Image();
-cliffWE.src = "img/tiles/cliff-we.png";
-const cliffL = new Image();
-cliffL.src = "img/tiles/cliff-l.png";
-const cliffBig = new Image();
-cliffBig.src = "img/tiles/cliff-big.png";
-const cliffPtr = new Image();
-cliffPtr.src = "img/tiles/cliffs-pattern.png";
+const cliffTiles = new Image();
+cliffTiles.src = "img/tiles/cliff-tiles.png";
 
 window.onload = () => {
   const LINE = 11; //number of cells per column/row
   const SIZE = 110.5; //cell size
   const canvas = document.querySelector("canvas");
   document.querySelector("#pdf").addEventListener("click", savePDF);
-
+  const newMap = document.querySelector(".newmap");
+  if (CLIFFS) {
+    newMap.href += `&cliffs=${CLIFFS}`;
+  }
+  if (BIG) {
+    newMap.href += `&big=${BIG}`;
+  }
+  if (HEROES) {
+    newMap.href += `&heroes=${HEROES}`;
+  }
   const ctx = canvas.getContext("2d");
   const random = getRandomBySeed();
   const ELEMENTS = {
@@ -53,52 +56,49 @@ window.onload = () => {
       filter: () => {},
     },
     C: {
-      total: Math.min(Math.max(params.get("cliffs") ?? 0, 0), 10),
+      total: CLIFFS,
       color: "hsl(34, 64%, 89%)",
-      img: cliffs,
+      img: null,
+      filter: () => {
+        ctx.globalCompositeOperation = "multiply";
+      },
+      draw: drawCliff,
+    },
+    B: {
+      total: BIG,
+      color: "hsl(34, 64%, 89%)",
+      img: null,
+      filter: () => {
+        ctx.globalCompositeOperation = "multiply";
+      },
+      draw: drawCliff,
+    },
+    L: {
+      total: HEROES,
+      color: "hsl(34, 64%, 89%)",
+      img: null,
       filter: () => {
         ctx.globalCompositeOperation = "multiply";
       },
       draw: drawCliff,
     },
     NS: {
-      total: params.get("heroes") ? 1 : 0,
+      total: HEROES,
       color: "hsl(34, 64%, 89%)",
-      img: cliffNS,
-      height: 2 * SIZE + 12,
+      img: null,
       filter: () => {
         ctx.globalCompositeOperation = "multiply";
       },
+      draw: drawCliff,
     },
     WE: {
-      total: params.get("heroes") ? 1 : 0,
+      total: HEROES,
       color: "hsl(34, 64%, 89%)",
-      img: cliffWE,
-      width: 2 * SIZE + 12,
+      img: null,
       filter: () => {
         ctx.globalCompositeOperation = "multiply";
       },
-    },
-    L: {
-      total: params.get("heroes") ? 1 : 0,
-      color: "hsl(34, 64%, 89%)",
-      img: cliffL,
-      width: 2 * SIZE + 12,
-      height: 2 * SIZE + 12,
-      filter: () => {
-        ctx.globalCompositeOperation = "multiply";
-      },
-    },
-    B: {
-      total: params.get("big") ? 1 : 0,
-      color: "hsl(34, 64%, 89%)",
-      img: cliffBig,
-      width: 3 * SIZE,
-      height: 4 * SIZE,
-      dc: -1,
-      filter: () => {
-        ctx.globalCompositeOperation = "multiply";
-      },
+      draw: drawCliff,
     },
   };
 
@@ -115,13 +115,13 @@ window.onload = () => {
     let total = ELEMENTS[k].total;
     if (k == "C") {
       let t = ELEMENTS[k].total;
-      while(t>0){
-        t-=randomWalk(t);
+      while (t > 0) {
+        t -= randomWalk(t);
       }
       continue;
     }
     let km = 0;
-    while (total > 0 && km < 64) {
+    while (total > 0 && km < 121) {
       km++;
       const r = random.randInt(0, 10);
       const c = random.randInt(0, 10);
@@ -138,20 +138,23 @@ window.onload = () => {
         if (r === 10 || c === 10 || map[r][c + 1] || map[r + 1][c]) {
           continue;
         }
-        map[r][c + 1] = "X";
-        map[r + 1][c] = "X";
+        map[r][c] = "C";
+        map[r][c + 1] = "C";
+        map[r + 1][c] = "C";
       }
       if (r === 10 || k === "NS") {
         if (map[r + 1][c]) {
           continue;
         }
-        map[r + 1][c] = "X";
+        map[r + 1][c] = "C";
+        map[r][c] = "C";
       }
       if (c === 10 || k === "WE") {
         if (map[r][c + 1]) {
           continue;
         }
-        map[r][c + 1] = "X";
+        map[r][c + 1] = "C";
+        map[r][c] = "C";
       }
       if (k === "B") {
         if (
@@ -168,15 +171,16 @@ window.onload = () => {
         ) {
           continue;
         }
-        map[r + 1][c] = "X";
-        map[r + 2][c] = "X";
-        map[r + 3][c] = "X";
-        map[r + 1][c - 1] = "X";
-        map[r + 2][c - 1] = "X";
-        map[r + 2][c + 1] = "X";
+        map[r][c] = "C";
+        map[r + 1][c] = "C";
+        map[r + 2][c] = "C";
+        map[r + 3][c] = "C";
+        map[r + 1][c - 1] = "C";
+        map[r + 2][c - 1] = "C";
+        map[r + 2][c + 1] = "C";
       }
 
-      map[r][c] = k;
+      map[r][c] = map[r][c] != "C" ? k : map[r][c];
       total--;
     }
   }
@@ -215,7 +219,7 @@ window.onload = () => {
             ctx.restore();
           }
         }
-        // ctx.fillStyle = "white";
+        // ctx.fillStyle = "orange";
         // ctx.font = "30px Arial";
         // ctx.fillText(`c${c}r${r}:${map[r][c]}`, c * SIZE + 30, r * SIZE + 30);
         //ctx.globalAlpha = 0.1;
@@ -227,25 +231,24 @@ window.onload = () => {
     ctx.font = "bolder 24px Courier";
     ctx.textAlign = "right";
     ctx.fillStyle = "#48320f";
-    ctx.fillText("(" + seed + ")", 1386, 398);
+    ctx.fillText("(" + SEED + ")", 1386, 398);
     ctx.drawImage(shield, 637, 200);
   }
 
   function getRandomBySeed() {
     let seedHash;
-    if (seed) {
-      seedHash = seed.substr(0, 9);
+    if (SEED) {
+      seedHash = SEED.substr(0, 9);
       document.querySelectorAll("img").forEach((i) => (i.style.opacity = 1.0));
       document.querySelector("canvas").style.opacity = 1.0;
       document.querySelector(".actions").style.opacity = 1.0;
       document.querySelector(".loader").style.opacity = 0.0;
     } else {
-      //seed aleatória
-      let maxValue = 999999;
-      let minValue = 99;
+      let maxValue = 9999999999;
+      let minValue = 0;
       seedHash = Math.floor(Math.random() * (maxValue - minValue)) + minValue;
-      location.search = `?map=${seedHash}`;
-      seed = seedHash;
+      let search = `?map=${seedHash}`;
+      location.search = location.search.replace("?", search);
     }
     const seedGen = new SeedGenerator({
       seed_1: parseInt(seedHash, 36),
@@ -258,7 +261,7 @@ window.onload = () => {
     var imgData = canvas.toDataURL("image/png");
     var doc = new jsPDF("p", "mm", [359, 519]);
     doc.addImage(imgData, "PNG", 0, 0, 126.7, 183);
-    doc.save(`map-${seed}.pdf`);
+    doc.save(`map-${SEED}.pdf`);
   }
   function randomWalk(t) {
     let r = random.randInt(0, 10);
@@ -283,7 +286,6 @@ window.onload = () => {
       vc = v[d][1];
       nr = Math.max(Math.min(r + vr, 10), 0);
       nc = Math.max(Math.min(c + vc, 10), 0);
-      //console.log(`${s} ${t}: ${r}(${vr}) ${c}(${vc})`);
       s++;
       if (pd == d || map[nr][nc] != "") {
         continue;
@@ -296,189 +298,113 @@ window.onload = () => {
     } while (placed < t && s < 100);
     return placed;
   }
+
+  const tileset = [];
+  tileset[2] = 1;
+  tileset[8] = 2;
+  tileset[10] = 3;
+  tileset[11] = 4;
+  tileset[16] = 5;
+  tileset[18] = 6;
+  tileset[22] = 7;
+  tileset[24] = 8;
+  tileset[26] = 9;
+  tileset[27] = 10;
+  tileset[30] = 11;
+  tileset[31] = 12;
+  tileset[64] = 13;
+  tileset[66] = 14;
+  tileset[72] = 15;
+  tileset[74] = 16;
+  tileset[75] = 17;
+  tileset[80] = 18;
+  tileset[82] = 19;
+  tileset[86] = 20;
+  tileset[88] = 21;
+  tileset[90] = 22;
+  tileset[91] = 23;
+  tileset[94] = 24;
+  tileset[95] = 25;
+  tileset[104] = 26;
+  tileset[106] = 27;
+  tileset[107] = 28;
+  tileset[120] = 29;
+  tileset[122] = 30;
+  tileset[123] = 31;
+  tileset[126] = 32;
+  tileset[127] = 33;
+  tileset[208] = 34;
+  tileset[210] = 35;
+  tileset[214] = 36;
+  tileset[216] = 37;
+  tileset[218] = 38;
+  tileset[219] = 39;
+  tileset[222] = 40;
+  tileset[223] = 41;
+  tileset[248] = 42;
+  tileset[250] = 43;
+  tileset[251] = 44;
+  tileset[254] = 45;
+  tileset[255] = 46;
+  tileset[0] = 47;
+
   function drawCliff(ctx, r, c, SIZE) {
     ctx.globalAlpha = 1.0;
     ctx.save();
+    ctx.globalCompositeOperation = "multiply";
+
+    const NW =
+      r > 0 &&
+      c > 0 &&
+      map[r - 1][c - 1] == "C" &&
+      map[r - 1][c] == "C" &&
+      map[r][c - 1] == "C"
+        ? 1
+        : 0;
+    const N = r > 0 && map[r - 1][c] == "C" ? 2 : 0;
+    const NE =
+      r > 0 &&
+      c < 10 &&
+      map[r - 1][c + 1] == "C" &&
+      map[r - 1][c] == "C" &&
+      map[r][c + 1] == "C"
+        ? 4
+        : 0;
+    const E = c < 10 && map[r][c + 1] == "C" ? 16 : 0;
+    const W = c > 0 && map[r][c - 1] == "C" ? 8 : 0;
+    const SW =
+      r < 10 &&
+      c > 0 &&
+      map[r + 1][c - 1] == "C" &&
+      map[r + 1][c] == "C" &&
+      map[r][c - 1] == "C"
+        ? 32
+        : 0;
+    const S = r < 10 && map[r + 1][c] == "C" ? 64 : 0;
+    const SE =
+      r < 10 &&
+      c < 10 &&
+      map[r + 1][c + 1] == "C" &&
+      map[r + 1][c] == "C" &&
+      map[r][c + 1] == "C"
+        ? 128
+        : 0;
+    const tile = N + NW + W + SW + S + SE + E + NE;
+
+    const tc = (tileset[tile] ?? tile) % 8;
+    const tr = Math.floor((tileset[tile] ?? tile) / 8);
+
     ctx.drawImage(
-      cliffPtr,
-      0 * 173,
-      2 * 173,
-      3 * 173,
-      3 * 173,
+      cliffTiles,
+      tc * 112,
+      tr * 112,
+      1 * 112,
+      1 * 112,
       c * SIZE,
       r * SIZE,
       SIZE,
       SIZE
     );
-    const W = c > 0 && map[r][c - 1] == "C";
-    const E = c < 10 && map[r][c + 1] == "C";
-    const S = (r < 10) & (map[r + 1][c] == "C");
-    const N = r > 0 && map[r - 1][c] == "C";
-    const NE = N && E && map[r - 1][c + 1] == "C";
-    const NW = N && W && map[r - 1][c - 1] == "C";
-    const SE = S && E && map[r + 1][c + 1] == "C";
-    const SW = S && W && map[r + 1][c - 1] == "C";
-
-    if (E) {
-      ctx.drawImage(
-        cliffPtr,
-        1 * 173,
-        2 * 173,
-        1 * 173,
-        3 * 173,
-        (c + 2 / 3) * SIZE,
-        r * SIZE,
-        SIZE / 3,
-        SIZE
-      );
-    }
-
-    if (W) {
-      ctx.drawImage(
-        cliffPtr,
-        1 * 173,
-        2 * 173,
-        1 * 173,
-        3 * 173,
-        c * SIZE,
-        r * SIZE,
-        SIZE / 3,
-        SIZE
-      );
-    }
-
-    if (S) {
-      ctx.drawImage(
-        cliffPtr,
-        0 * 173,
-        3 * 173,
-        3 * 173,
-        1 * 173,
-        c * SIZE,
-        (r + 2 / 3) * SIZE,
-        SIZE,
-        SIZE / 3
-      );
-    }
-
-    if (N) {
-      ctx.drawImage(
-        cliffPtr,
-        0 * 173,
-        3 * 173,
-        3 * 173,
-        1 * 173,
-        c * SIZE,
-        r * SIZE,
-        SIZE,
-        SIZE / 3
-      );
-    }
-
-    if (N && E) {
-      ctx.drawImage(
-        cliffPtr,
-        1 * 173,
-        1 * 173,
-        1 * 173,
-        1 * 173,
-        (c + 2 / 3) * SIZE,
-        (r + 0) * SIZE,
-        SIZE / 3,
-        SIZE / 3
-      );
-    }
-    if (N && W) {
-      ctx.drawImage(
-        cliffPtr,
-        2 * 173,
-        1 * 173,
-        1 * 173,
-        1 * 173,
-        (c + 0) * SIZE,
-        (r + 0) * SIZE,
-        SIZE / 3,
-        SIZE / 3
-      );
-    }
-    if (S && E) {
-      ctx.drawImage(
-        cliffPtr,
-        1 * 173,
-        0 * 173,
-        1 * 173,
-        1 * 173,
-        (c + 2 / 3) * SIZE,
-        (r + 2 / 3) * SIZE,
-        SIZE / 3,
-        SIZE / 3
-      );
-    }
-    if (S && W) {
-      ctx.drawImage(
-        cliffPtr,
-        2 * 173,
-        0 * 173,
-        1 * 173,
-        1 * 173,
-        (c + 0) * SIZE,
-        (r + 2 / 3) * SIZE,
-        SIZE / 3,
-        SIZE / 3
-      );
-    }
-    if (NW) {
-      ctx.drawImage(
-        cliffPtr,
-        1 * 173,
-        3 * 173,
-        1 * 173,
-        1 * 173,
-        (c + 0) * SIZE,
-        (r + 0) * SIZE,
-        SIZE / 3,
-        SIZE / 3
-      );
-    }
-    if (NE) {
-      ctx.drawImage(
-        cliffPtr,
-        1 * 173,
-        3 * 173,
-        1 * 173,
-        1 * 173,
-        (c + 2/3) * SIZE,
-        (r + 0) * SIZE,
-        SIZE / 3,
-        SIZE / 3
-      );
-    }
-    if (SW) {
-      ctx.drawImage(
-        cliffPtr,
-        1 * 173,
-        3 * 173,
-        1 * 173,
-        1 * 173,
-        (c + 0) * SIZE,
-        (r + 2/3) * SIZE,
-        SIZE / 3,
-        SIZE / 3
-      );
-    }
-    if (SE) {
-      ctx.drawImage(
-        cliffPtr,
-        1 * 173,
-        3 * 173,
-        1 * 173,
-        1 * 173,
-        (c + 2/3) * SIZE,
-        (r + 2/3) * SIZE,
-        SIZE / 3,
-        SIZE / 3
-      );
-    }
     ctx.restore();
   }
 };
