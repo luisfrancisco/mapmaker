@@ -23,15 +23,26 @@ window.onload = () => {
   const canvas = document.querySelector("canvas");
   document.querySelector("#pdf").addEventListener("click", savePDF);
   const newMap = document.querySelector(".newmap");
+  const shareMap = document.querySelector(".share");
+
+  if (SEED) {
+    const nextSeed = Math.floor(Math.random() * (9999999999));
+    newMap.href = `./?map=${nextSeed}`;
+    shareMap.href = `./?map=${SEED}`;
+  }
   if (CLIFFS) {
     newMap.href += `&cliffs=${CLIFFS}`;
+    shareMap.href += `&cliffs=${CLIFFS}`;
   }
   if (BIG) {
     newMap.href += `&big=${BIG}`;
+    shareMap.href += `&big=${BIG}`;
   }
   if (HEROES) {
     newMap.href += `&heroes=${HEROES}`;
+    shareMap.href += `&heroes=${HEROES}`;
   }
+  shareMap.textContent = shareMap.href;
   const ctx = canvas.getContext("2d");
   const random = getRandomBySeed();
   const ELEMENTS = {
@@ -247,8 +258,20 @@ window.onload = () => {
       let maxValue = 9999999999;
       let minValue = 0;
       seedHash = Math.floor(Math.random() * (maxValue - minValue)) + minValue;
-      let search = `?map=${seedHash}`;
-      location.search = location.search.replace("?", search);
+      let search = location.search;
+      if(!SEED){ 
+        search = `?map=${seedHash}`;
+        if (CLIFFS) {
+          search += `&cliffs=${CLIFFS}`;
+        }
+        if (BIG) {
+          search += `&big=${BIG}`;
+        }
+        if (HEROES) {
+          search += `&heroes=${HEROES}`;
+        }
+        location.search = search;
+      }
     }
     const seedGen = new SeedGenerator({
       seed_1: parseInt(seedHash, 36),
