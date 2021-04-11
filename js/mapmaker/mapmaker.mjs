@@ -1,16 +1,27 @@
-import SeedGenerator from "./SeedGenerator.mjs";
-
+import seedGenerator from "./SeedGenerator.mjs";
+let MOUNTAINS;
+let RUINS;
 const bg = new Image();
 bg.src = "img/bg/mapbase.png";
 const ruins = new Image();
-ruins.src = "img/tiles/ruina.png";
+ruins.src = "img/tiles/ruin.png";
 const mountains = new Image();
-mountains.src = "img/tiles/montanha.png";
+mountains.src = "img/tiles/mountain.png";
 const params = new URLSearchParams(location.search);
 const SEED = params.get("map");
 const CLIFFS = Math.min(Math.max(params.get("cliffs") ?? 0, 0), 20);
 const HEROES = Math.min(Math.max(params.get("heroes") ?? 0, 0), 1);
 const BIG = Math.min(Math.max(params.get("big") ?? 0, 0), 1);
+
+const random = getRandomBySeed();
+MOUNTAINS = Math.min(
+  Math.max(params.get("mountains") ?? random.randInt(5, 8), 0),
+  10
+)
+RUINS = Math.min(
+  Math.max(params.get("ruins") ?? random.randInt(6, 8), 0),
+  10
+)
 
 const shield = new Image();
 shield.src = "img/bg/shield.png";
@@ -30,6 +41,15 @@ window.onload = () => {
     newMap.href = `./?map=${nextSeed}`;
     shareMap.href = `./?map=${SEED}`;
   }
+  if (MOUNTAINS) {
+    newMap.href += `&mountains=${MOUNTAINS}`;
+    shareMap.href += `&mountains=${MOUNTAINS}`;
+  }
+  if (RUINS) {
+    newMap.href += `&ruins=${RUINS}`;
+    shareMap.href += `&ruins=${RUINS}`;
+  }
+  
   if (CLIFFS) {
     newMap.href += `&cliffs=${CLIFFS}`;
     shareMap.href += `&cliffs=${CLIFFS}`;
@@ -42,15 +62,12 @@ window.onload = () => {
     newMap.href += `&heroes=${HEROES}`;
     shareMap.href += `&heroes=${HEROES}`;
   }
+
   shareMap.textContent = shareMap.href;
   const ctx = canvas.getContext("2d");
-  const random = getRandomBySeed();
   const ELEMENTS = {
     R: {
-      total: Math.min(
-        Math.max(params.get("ruins") ?? random.randInt(6, 8), 0),
-        10
-      ),
+      total: RUINS,
       color: "hsl(34, 44%, 29%)",
       img: ruins,
       filter: () => {
@@ -58,10 +75,7 @@ window.onload = () => {
       },
     },
     M: {
-      total: Math.min(
-        Math.max(params.get("mountains") ?? random.randInt(5, 7), 0),
-        10
-      ),
+      total: MOUNTAINS,
       color: "hsl(34, 0%, 29%)",
       img: mountains,
       filter: () => {},
@@ -216,7 +230,6 @@ window.onload = () => {
           }
           ctx.globalAlpha = 1.0;
           ctx.fillStyle = ELEMENTS[map[r][c]].color;
-          //ctx.fillRect(c * SIZE + 5, r * SIZE + 5, SIZE - 10, SIZE - 10);
           if (ELEMENTS[map[r][c]].img) {
             ctx.save();
             ELEMENTS[map[r][c]].filter();
@@ -230,12 +243,6 @@ window.onload = () => {
             ctx.restore();
           }
         }
-        // ctx.fillStyle = "orange";
-        // ctx.font = "30px Arial";
-        // ctx.fillText(`c${c}r${r}:${map[r][c]}`, c * SIZE + 30, r * SIZE + 30);
-        //ctx.globalAlpha = 0.1;
-        // ctx.strokeStyle = "black";
-        // ctx.strokeRect(c * SIZE + 1, r * SIZE + 1, SIZE - 1, SIZE - 1);
       }
     }
     ctx.restore();
@@ -246,40 +253,7 @@ window.onload = () => {
     ctx.drawImage(shield, 637, 200);
   }
 
-  function getRandomBySeed() {
-    let seedHash;
-    if (SEED) {
-      seedHash = SEED.substr(0, 9);
-      document.querySelectorAll("img").forEach((i) => (i.style.opacity = 1.0));
-      document.querySelector("canvas").style.opacity = 1.0;
-      document.querySelector(".actions").style.opacity = 1.0;
-      document.querySelector(".loader").style.opacity = 0.0;
-    } else {
-      let maxValue = 9999999999;
-      let minValue = 0;
-      seedHash = Math.floor(Math.random() * (maxValue - minValue)) + minValue;
-      let search = location.search;
-      if(!SEED){ 
-        search = `?map=${seedHash}`;
-        if (CLIFFS) {
-          search += `&cliffs=${CLIFFS}`;
-        }
-        if (BIG) {
-          search += `&big=${BIG}`;
-        }
-        if (HEROES) {
-          search += `&heroes=${HEROES}`;
-        }
-        location.search = search;
-      }
-    }
-    const seedGen = new SeedGenerator({
-      seed_1: parseInt(seedHash, 36),
-      seed_2_string: seedHash,
-    });
-
-    return seedGen;
-  }
+  
   function savePDF() {
     var imgData = canvas.toDataURL("image/png");
     var doc = new jsPDF("p", "mm", [359, 519]);
@@ -322,54 +296,9 @@ window.onload = () => {
     return placed;
   }
 
-  const tileset = [];
-  tileset[2] = 1;
-  tileset[8] = 2;
-  tileset[10] = 3;
-  tileset[11] = 4;
-  tileset[16] = 5;
-  tileset[18] = 6;
-  tileset[22] = 7;
-  tileset[24] = 8;
-  tileset[26] = 9;
-  tileset[27] = 10;
-  tileset[30] = 11;
-  tileset[31] = 12;
-  tileset[64] = 13;
-  tileset[66] = 14;
-  tileset[72] = 15;
-  tileset[74] = 16;
-  tileset[75] = 17;
-  tileset[80] = 18;
-  tileset[82] = 19;
-  tileset[86] = 20;
-  tileset[88] = 21;
-  tileset[90] = 22;
-  tileset[91] = 23;
-  tileset[94] = 24;
-  tileset[95] = 25;
-  tileset[104] = 26;
-  tileset[106] = 27;
-  tileset[107] = 28;
-  tileset[120] = 29;
-  tileset[122] = 30;
-  tileset[123] = 31;
-  tileset[126] = 32;
-  tileset[127] = 33;
-  tileset[208] = 34;
-  tileset[210] = 35;
-  tileset[214] = 36;
-  tileset[216] = 37;
-  tileset[218] = 38;
-  tileset[219] = 39;
-  tileset[222] = 40;
-  tileset[223] = 41;
-  tileset[248] = 42;
-  tileset[250] = 43;
-  tileset[251] = 44;
-  tileset[254] = 45;
-  tileset[255] = 46;
-  tileset[0] = 47;
+  const tileSet = [
+    47,,1,,,,,,2,,3,4,,,,,5,,6,,,,7,,8,,9,10,,,11,12,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,13,,14,,,,,,15,,16,17,,,,,18,,19,,,,20,,21,,22,23,,,24,25,,,,,,,,,26,,27,28,,,,,,,,,,,,,29,,30,31,,,32,33,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,34,,35,,,,36,,37,,38,39,,,40,41,,,,,,,,,,,,,,,,,,,,,,,,,42,,43,44,,,45,46
+  ];
 
   function drawCliff(ctx, r, c, SIZE) {
     ctx.globalAlpha = 1.0;
@@ -414,8 +343,8 @@ window.onload = () => {
         : 0;
     const tile = N + NW + W + SW + S + SE + E + NE;
 
-    const tc = (tileset[tile] ?? tile) % 8;
-    const tr = Math.floor((tileset[tile] ?? tile) / 8);
+    const tc = (tileSet[tile] ?? tile) % 8;
+    const tr = Math.floor((tileSet[tile] ?? tile) / 8);
 
     ctx.drawImage(
       cliffTiles,
@@ -431,3 +360,44 @@ window.onload = () => {
     ctx.restore();
   }
 };
+
+function getRandomBySeed() {
+  let seedHash;
+  if (SEED) {
+    seedHash = SEED.substr(0, 9);
+    document.querySelectorAll("img").forEach((i) => (i.style.opacity = 1.0));
+    document.querySelector("canvas").style.opacity = 1.0;
+    document.querySelector(".actions").style.opacity = 1.0;
+    document.querySelector(".loader").style.opacity = 0.0;
+  } else {
+    let maxValue = 9999999999;
+    let minValue = 0;
+    seedHash = Math.floor(Math.random() * (maxValue - minValue)) + minValue;
+    let search = location.search;
+    if(!SEED){ 
+      search = `?map=${seedHash}`;
+      if (MOUNTAINS) {
+        search += `&mountains=${MOUNTAINS}`;
+      }
+      if (RUINS) {
+        search += `&ruins=${RUINS}`;
+      }
+      if (CLIFFS) {
+        search += `&cliffs=${CLIFFS}`;
+      }
+      if (BIG) {
+        search += `&big=${BIG}`;
+      }
+      if (HEROES) {
+        search += `&heroes=${HEROES}`;
+      }
+      location.search = search;
+    }
+  }
+  const seedGen = new seedGenerator({
+    seed_1: parseInt(seedHash, 36),
+    seed_2_string: seedHash,
+  });
+
+  return seedGen;
+}
