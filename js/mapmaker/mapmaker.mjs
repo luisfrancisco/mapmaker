@@ -14,14 +14,10 @@ const HEROES = Math.min(Math.max(params.get("heroes") ?? 0, 0), 1);
 const BIG = Math.min(Math.max(params.get("big") ?? 0, 0), 1);
 
 const random = getRandomBySeed();
-MOUNTAINS = Math.min(
-  Math.max(params.get("mountains") ?? random.randInt(5, 8), 0),
-  10
-)
-RUINS = Math.min(
-  Math.max(params.get("ruins") ?? random.randInt(6, 8), 0),
-  10
-)
+MOUNTAINS = 
+  Math.min(Math.max(params.get("mountains") ?? 0, 5), 10);
+
+RUINS =   Math.min(Math.max(params.get("mountains") ?? 0, 6), 10);
 
 const shield = new Image();
 shield.src = "img/bg/shield.png";
@@ -41,11 +37,11 @@ window.onload = () => {
     newMap.href = `./?map=${nextSeed}`;
     shareMap.href = `./?map=${SEED}`;
   }
-  if (MOUNTAINS) {
+  if (MOUNTAINS && MOUNTAINS !=5) {
     newMap.href += `&mountains=${MOUNTAINS}`;
     shareMap.href += `&mountains=${MOUNTAINS}`;
   }
-  if (RUINS) {
+  if (RUINS && RUINS !=6) {
     newMap.href += `&ruins=${RUINS}`;
     shareMap.href += `&ruins=${RUINS}`;
   }
@@ -302,13 +298,14 @@ window.onload = () => {
 
   function drawCliff(ctx, r, c, SIZE) {
     ctx.globalAlpha = 1.0;
+    /*
     ctx.fillStyle = "hsl(34deg 34% 75%)";
     ctx.fillRect(
       c * SIZE,
       r * SIZE,
       SIZE,
       SIZE
-      );
+      );*/
     ctx.save();
     ctx.globalCompositeOperation = "multiply";
     
@@ -383,10 +380,10 @@ function getRandomBySeed() {
     let search = location.search;
     if(!SEED){ 
       search = `?map=${seedHash}`;
-      if (MOUNTAINS) {
+      if (MOUNTAINS && MOUNTAINS !=5) {
         search += `&mountains=${MOUNTAINS}`;
       }
-      if (RUINS) {
+      if (RUINS && RUINS !=6) {
         search += `&ruins=${RUINS}`;
       }
       if (CLIFFS) {
