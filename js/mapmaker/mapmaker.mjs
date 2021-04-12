@@ -302,9 +302,16 @@ window.onload = () => {
 
   function drawCliff(ctx, r, c, SIZE) {
     ctx.globalAlpha = 1.0;
+    ctx.fillStyle = "hsl(34deg 34% 75%)";
+    ctx.fillRect(
+      c * SIZE,
+      r * SIZE,
+      SIZE,
+      SIZE
+      );
     ctx.save();
     ctx.globalCompositeOperation = "multiply";
-
+    
     const NW =
       r > 0 &&
       c > 0 &&
