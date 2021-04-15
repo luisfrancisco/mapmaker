@@ -47,6 +47,12 @@
       /></a>
       <p>Copyright 2021 © <a href="https://grokgames.com.br">Grok Games</a></p>
     </footer>
-
+    <script>
+      if ( 'serviceWorker' in navigator ) {
+        try {
+          navigator.serviceWorker.register( './js/serviceworker.js' );
+        } catch ( error ) {}
+      }
+    </script>
   </body>
 </html>

@@ -405,16 +405,3 @@ function getRandomBySeed() {
 
   return seedGen;
 }
-
-
-if ( 'serviceWorker' in navigator ) {
-
-  try {
-
-    navigator.serviceWorker.register( './js/serviceworker.js' );
-
-  } catch ( error ) {
-
-  }
-
-}
