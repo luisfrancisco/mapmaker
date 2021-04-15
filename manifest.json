@@ -1,0 +1,15 @@
+{
+  "name": "Cartographers MapMaker",
+  "short_name": "MapMaker",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "theme_color": "#021222",
+  "icons": [
+    {
+      "src": "./img/tiles/mountain.png",
+      "type": "image/png",
+      "sizes": "121x126"
+    }
+  ]
+}
