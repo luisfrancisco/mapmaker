@@ -9,7 +9,12 @@
     {
       "src": "./img/tiles/mountain.png",
       "type": "image/png",
-      "sizes": "121x126"
+      "sizes": "192x192"
+    },
+    {
+      "src": "./img/tiles/mountain.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ]
 }
