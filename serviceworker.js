@@ -1,4 +1,4 @@
-const cacheName = 'framejs-editor';
+const cacheName = 'mapmaker';
 
 const assets = [
 	'./',
