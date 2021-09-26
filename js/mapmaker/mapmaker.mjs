@@ -17,7 +17,7 @@ let random = getRandomBySeed();
 MOUNTAINS =
   Math.min(Math.max(params.get("mountains") ?? 0, 5), 10);
 
-RUINS = Math.min(Math.max(params.get("mountains") ?? 0, 6), 10);
+RUINS = Math.min(Math.max(params.get("ruins") ?? 0, 6), 10);
 
 const shield = new Image();
 shield.src = "img/bg/shield.png";
@@ -40,50 +40,56 @@ window.onload = () => {
   const mapBig = document.querySelector("#map-big");
   const mapHeroes = document.querySelector("#map-heroes");
 
-  if (SEED) {
-    const nextSeed = Math.floor(Math.random() * (9999999999));
-    newMap.href = `./?map=${nextSeed}`;
-    shareMap.href = `./?map=${SEED}`;
-  }
-  mapSeed.value = SEED;
-  if (MOUNTAINS && MOUNTAINS != 5) {
-    newMap.href += `&mountains=${MOUNTAINS}`;
-    shareMap.href += `&mountains=${MOUNTAINS}`;
-  }
-  mapMountains.value = MOUNTAINS??5;
-  if (RUINS && RUINS != 6) {
-    newMap.href += `&ruins=${RUINS}`;
-    shareMap.href += `&ruins=${RUINS}`;
-  }
-  mapRuins.value = RUINS??6;
-  
-  if (CLIFFS) {
-    newMap.href += `&cliffs=${CLIFFS}`;
-    shareMap.href += `&cliffs=${CLIFFS}`;
-    mapCliffs.value = CLIFFS||0;
-  }
-  if (BIG) {
-    newMap.href += `&big=${BIG}`;
-    shareMap.href += `&big=${BIG}`;
-  }
-  mapBig.checked = BIG>0;
-  if (HEROES) {
-    newMap.href += `&heroes=${HEROES}`;
-    shareMap.href += `&heroes=${HEROES}`;
-  }
-  mapHeroes.checked = HEROES>0;
+  function updateURL() {
 
-  shareMap.textContent = shareMap.href;
+    if (SEED) {
+      const nextSeed = Math.floor(Math.random() * (9999999999));
+      newMap.href = `./?map=${nextSeed}`;
+      shareMap.href = `./?map=${SEED}`;
+    }
+    mapSeed.value = SEED.substring(0, 9);
+    if (MOUNTAINS && MOUNTAINS != 5) {
+      newMap.href += `&mountains=${MOUNTAINS}`;
+      shareMap.href += `&mountains=${MOUNTAINS}`;
+    }
+    mapMountains.value = MOUNTAINS ?? 5;
+    if (RUINS && RUINS != 6) {
+      newMap.href += `&ruins=${RUINS}`;
+      shareMap.href += `&ruins=${RUINS}`;
+    }
+    mapRuins.value = RUINS ?? 6;
+
+    if (CLIFFS) {
+      newMap.href += `&cliffs=${CLIFFS}`;
+      shareMap.href += `&cliffs=${CLIFFS}`;
+      mapCliffs.value = CLIFFS || 0;
+    }
+    if (BIG) {
+      newMap.href += `&big=${BIG}`;
+      shareMap.href += `&big=${BIG}`;
+    }
+    mapBig.checked = BIG > 0;
+    if (HEROES) {
+      newMap.href += `&heroes=${HEROES}`;
+      shareMap.href += `&heroes=${HEROES}`;
+    }
+    mapHeroes.checked = HEROES > 0;
+
+    shareMap.textContent = shareMap.href;
+  }
+
   generate.addEventListener('click', (e) => {
     SEED = mapSeed.value;
     MOUNTAINS = mapMountains.value;
     RUINS = mapRuins.value;
     CLIFFS = mapCliffs.value;
-    BIG = mapBig.checked?1:0;
-    HEROES = mapHeroes.checked?1:0;
+    BIG = mapBig.checked ? 1 : 0;
+    HEROES = mapHeroes.checked ? 1 : 0;
     random = getRandomBySeed();
+    updateURL();
     drawMap();
   });
+  updateURL();
   drawMap();
 };
 
