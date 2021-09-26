@@ -10,8 +10,8 @@ mountains.src = "img/tiles/mountain.png";
 const params = new URLSearchParams(location.search);
 let SEED = params.get("map");
 let CLIFFS = Math.min(Math.max(params.get("cliffs") ?? 0, 0), 20);
-const HEROES = Math.min(Math.max(params.get("heroes") ?? 0, 0), 1);
-const BIG = Math.min(Math.max(params.get("big") ?? 0, 0), 1);
+let HEROES = Math.min(Math.max(params.get("heroes") ?? 0, 0), 1);
+let BIG = Math.min(Math.max(params.get("big") ?? 0, 0), 1);
 
 let random = getRandomBySeed();
 MOUNTAINS =
@@ -37,37 +37,41 @@ window.onload = () => {
   const mapMountains = document.querySelector("#map-mountains");
   const mapRuins = document.querySelector("#map-ruins");
   const mapCliffs = document.querySelector("#map-cliffs");
+  const mapBig = document.querySelector("#map-big");
+  const mapHeroes = document.querySelector("#map-heroes");
 
   if (SEED) {
     const nextSeed = Math.floor(Math.random() * (9999999999));
     newMap.href = `./?map=${nextSeed}`;
     shareMap.href = `./?map=${SEED}`;
-    mapSeed.value = SEED;
   }
+  mapSeed.value = SEED;
   if (MOUNTAINS && MOUNTAINS != 5) {
     newMap.href += `&mountains=${MOUNTAINS}`;
     shareMap.href += `&mountains=${MOUNTAINS}`;
-    mapMountains.value = MOUNTAINS;
   }
+  mapMountains.value = MOUNTAINS??5;
   if (RUINS && RUINS != 6) {
     newMap.href += `&ruins=${RUINS}`;
     shareMap.href += `&ruins=${RUINS}`;
-    mapRuins.value = RUINS;
   }
+  mapRuins.value = RUINS??6;
   
   if (CLIFFS) {
     newMap.href += `&cliffs=${CLIFFS}`;
     shareMap.href += `&cliffs=${CLIFFS}`;
-    mapCliffs.value = CLIFFS;
+    mapCliffs.value = CLIFFS||0;
   }
   if (BIG) {
     newMap.href += `&big=${BIG}`;
     shareMap.href += `&big=${BIG}`;
   }
+  mapBig.checked = BIG>0;
   if (HEROES) {
     newMap.href += `&heroes=${HEROES}`;
     shareMap.href += `&heroes=${HEROES}`;
   }
+  mapHeroes.checked = HEROES>0;
 
   shareMap.textContent = shareMap.href;
   generate.addEventListener('click', (e) => {
@@ -75,6 +79,8 @@ window.onload = () => {
     MOUNTAINS = mapMountains.value;
     RUINS = mapRuins.value;
     CLIFFS = mapCliffs.value;
+    BIG = mapBig.checked?1:0;
+    HEROES = mapHeroes.checked?1:0;
     random = getRandomBySeed();
     drawMap();
   });

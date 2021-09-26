@@ -205,14 +205,14 @@ footer a{
   background-size: 110% 110%;
 }
 
-input {
+
+input, label {
   background-color: transparent;
   color: #ffdd00;
   font-size: 18px;
   padding: 10px 30px;
   border: 1px solid #ffdd00;
   border-radius: 100px;
-
 }
 
 /*
