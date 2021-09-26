@@ -34,6 +34,7 @@ window.onload = () => {
   const shareMap = document.querySelector(".share");
   const generate = document.querySelector("#generate");
   const mapSeed = document.querySelector("#map-seed");
+  const mapMountains = document.querySelector("#map-mountains");
 
   if (SEED) {
     const nextSeed = Math.floor(Math.random() * (9999999999));
@@ -44,6 +45,7 @@ window.onload = () => {
   if (MOUNTAINS && MOUNTAINS != 5) {
     newMap.href += `&mountains=${MOUNTAINS}`;
     shareMap.href += `&mountains=${MOUNTAINS}`;
+    mapMountains.value = MOUNTAINS;
   }
   if (RUINS && RUINS != 6) {
     newMap.href += `&ruins=${RUINS}`;
@@ -67,6 +69,7 @@ window.onload = () => {
   generate.addEventListener('click', (e) => {
     console.log(mapSeed.value);
     SEED = mapSeed.value;
+    MOUNTAINS = mapMountains.value;
     random = getRandomBySeed();
     drawMap();
   });
