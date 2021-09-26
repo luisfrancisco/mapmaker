@@ -15,7 +15,7 @@ const BIG = Math.min(Math.max(params.get("big") ?? 0, 0), 1);
 
 let random = getRandomBySeed();
 MOUNTAINS =
-Math.min(Math.max(params.get("mountains") ?? 0, 5), 10);
+  Math.min(Math.max(params.get("mountains") ?? 0, 5), 10);
 
 RUINS = Math.min(Math.max(params.get("mountains") ?? 0, 6), 10);
 
@@ -35,6 +35,7 @@ window.onload = () => {
   const generate = document.querySelector("#generate");
   const mapSeed = document.querySelector("#map-seed");
   const mapMountains = document.querySelector("#map-mountains");
+  const mapRuins = document.querySelector("#map-ruins");
 
   if (SEED) {
     const nextSeed = Math.floor(Math.random() * (9999999999));
@@ -50,6 +51,7 @@ window.onload = () => {
   if (RUINS && RUINS != 6) {
     newMap.href += `&ruins=${RUINS}`;
     shareMap.href += `&ruins=${RUINS}`;
+    mapRuins.value = RUINS;
   }
 
   if (CLIFFS) {
@@ -70,6 +72,7 @@ window.onload = () => {
     console.log(mapSeed.value);
     SEED = mapSeed.value;
     MOUNTAINS = mapMountains.value;
+    RUINS = mapRuins.value;
     random = getRandomBySeed();
     drawMap();
   });
@@ -224,7 +227,7 @@ function drawMap() {
 
   canvas.width = bg.width;
   canvas.height = bg.height;
-  requestAnimationFrame(()=>drawBackGround(map, ELEMENTS));
+  requestAnimationFrame(() => drawBackGround(map, ELEMENTS));
 }
 
 function drawBackGround(map, ELEMENTS) {
