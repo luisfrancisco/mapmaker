@@ -3,16 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <title>Cartographers Map Generator v0.1</title>
-    <meta name="description" content="Create random maps for your Cartographers game. Use ?map=XXXX on the url to create your own seeded map." />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="description"
+      content="Create random maps for your Cartographers game. Use ?map=XXXX on the url to create your own seeded map."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:title" content="Cartographers Map Generator v0.1" />
     <meta property="og:type" content="" />
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
-    
-    <link rel="manifest" href="manifest.json">
+
+    <link rel="manifest" href="manifest.json" />
     <link rel="apple-touch-icon" href="favicon.ico" />
-    <link rel="author" href="http://igorknop.com.br"/>
+    <link rel="author" href="http://igorknop.com.br" />
 
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/main.css" />
@@ -27,31 +30,43 @@
     <img src="img/LOGO.png" class="logo center" />
 
     <div class="actions">
-      <a class="button print no-print" onclick="print()"><span class="btn-text">Imprimir!</span></a>
-      <a class="button pdf no-print" id="pdf"><span class="btn-text">Salvar PDF</span></a>
-      <a class="button newmap no-print" href="?map="><span class="btn-text">Novo Mapa</span></a>
+      <a class="button print no-print" onclick="print()"
+        ><span class="btn-text">Imprimir!</span></a
+      >
+      <a class="button pdf no-print" id="pdf"
+        ><span class="btn-text">Salvar PDF</span></a
+      >
+      <a class="button newmap no-print" href="?map="
+        ><span class="btn-text">Novo Mapa</span></a
+      >
     </div>
-
 
     <div id="map">
       <canvas>
         <div id="image">Your browser is an ancient relic. Update it!</div>
       </canvas>
     </div>
-    <p>Share this map with friends: <a class="share" href=""></a>
-</p>
+    <p>Share this map with friends: <a class="share" href=""></a></p>
+    <details open>
+      <summary>Options</summary>
+      <div>
+        <input type="text" name="map-seed" id="map-seed" placeholder="Map Seed" maxlength="9">
+        <button id="generate" class="button">Generate</button>
+      </div>
+    </details>
     <footer>
-      <a href="https://grokgames.com.br"><img
-        src="https://grokgames.com.br/wp-content/uploads/2019/10/grok_logo-280x192.png"
-        width="70px"
+      <a href="https://grokgames.com.br"
+        ><img
+          src="https://grokgames.com.br/wp-content/uploads/2019/10/grok_logo-280x192.png"
+          width="70px"
       /></a>
       <p>Copyright 2021 © <a href="https://grokgames.com.br">Grok Games</a></p>
     </footer>
     <script>
-      if ( 'serviceWorker' in navigator ) {
+      if ("serviceWorker" in navigator) {
         try {
-          navigator.serviceWorker.register( 'serviceworker.js' );
-        } catch ( error ) {}
+          navigator.serviceWorker.register("serviceworker.js");
+        } catch (error) {}
       }
     </script>
   </body>

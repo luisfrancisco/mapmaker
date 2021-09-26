@@ -8,44 +8,48 @@ ruins.src = "img/tiles/ruin.png";
 const mountains = new Image();
 mountains.src = "img/tiles/mountain.png";
 const params = new URLSearchParams(location.search);
-const SEED = params.get("map");
+let SEED = params.get("map");
 const CLIFFS = Math.min(Math.max(params.get("cliffs") ?? 0, 0), 20);
 const HEROES = Math.min(Math.max(params.get("heroes") ?? 0, 0), 1);
 const BIG = Math.min(Math.max(params.get("big") ?? 0, 0), 1);
 
-const random = getRandomBySeed();
-MOUNTAINS = 
-  Math.min(Math.max(params.get("mountains") ?? 0, 5), 10);
+let random = getRandomBySeed();
+MOUNTAINS =
+Math.min(Math.max(params.get("mountains") ?? 0, 5), 10);
 
-RUINS =   Math.min(Math.max(params.get("mountains") ?? 0, 6), 10);
+RUINS = Math.min(Math.max(params.get("mountains") ?? 0, 6), 10);
 
 const shield = new Image();
 shield.src = "img/bg/shield.png";
 const cliffTiles = new Image();
 cliffTiles.src = "img/tiles/cliff-tiles.png";
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
+const LINE = 11; //number of cells per column/row
+const SIZE = 110.5; //cell size
 
 window.onload = () => {
-  const LINE = 11; //number of cells per column/row
-  const SIZE = 110.5; //cell size
-  const canvas = document.querySelector("canvas");
   document.querySelector("#pdf").addEventListener("click", savePDF);
   const newMap = document.querySelector(".newmap");
   const shareMap = document.querySelector(".share");
+  const generate = document.querySelector("#generate");
+  const mapSeed = document.querySelector("#map-seed");
 
   if (SEED) {
     const nextSeed = Math.floor(Math.random() * (9999999999));
     newMap.href = `./?map=${nextSeed}`;
     shareMap.href = `./?map=${SEED}`;
+    mapSeed.value = SEED;
   }
-  if (MOUNTAINS && MOUNTAINS !=5) {
+  if (MOUNTAINS && MOUNTAINS != 5) {
     newMap.href += `&mountains=${MOUNTAINS}`;
     shareMap.href += `&mountains=${MOUNTAINS}`;
   }
-  if (RUINS && RUINS !=6) {
+  if (RUINS && RUINS != 6) {
     newMap.href += `&ruins=${RUINS}`;
     shareMap.href += `&ruins=${RUINS}`;
   }
-  
+
   if (CLIFFS) {
     newMap.href += `&cliffs=${CLIFFS}`;
     shareMap.href += `&cliffs=${CLIFFS}`;
@@ -60,7 +64,16 @@ window.onload = () => {
   }
 
   shareMap.textContent = shareMap.href;
-  const ctx = canvas.getContext("2d");
+  generate.addEventListener('click', (e) => {
+    console.log(mapSeed.value);
+    SEED = mapSeed.value;
+    random = getRandomBySeed();
+    drawMap();
+  });
+  drawMap();
+};
+
+function drawMap() {
   const ELEMENTS = {
     R: {
       total: RUINS,
@@ -74,7 +87,7 @@ window.onload = () => {
       total: MOUNTAINS,
       color: "hsl(34, 0%, 29%)",
       img: mountains,
-      filter: () => {},
+      filter: () => { },
     },
     C: {
       total: CLIFFS,
@@ -208,162 +221,155 @@ window.onload = () => {
 
   canvas.width = bg.width;
   canvas.height = bg.height;
+  requestAnimationFrame(()=>drawBackGround(map, ELEMENTS));
+}
 
-  requestAnimationFrame(drawBackGround);
-
-  function drawBackGround() {
-    ctx.fillStyle = "hsl(34, 44%, 69%)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(bg, 0, 0, bg.width, bg.height);
-    ctx.save();
-    ctx.translate(142, 433);
-    for (let r = 0; r < LINE; r++) {
-      for (let c = 0; c < LINE; c++) {
-        if (map[r][c] && map[r][c] !== "X") {
-          if (ELEMENTS[map[r][c]].draw) {
-            ELEMENTS[map[r][c]].draw(ctx, r, c, SIZE);
-            continue;
-          }
-          ctx.globalAlpha = 1.0;
-          ctx.fillStyle = ELEMENTS[map[r][c]].color;
-          if (ELEMENTS[map[r][c]].img) {
-            ctx.save();
-            ELEMENTS[map[r][c]].filter();
-            ctx.drawImage(
-              ELEMENTS[map[r][c]].img,
-              (c + (ELEMENTS[map[r][c]].dc ?? 0)) * SIZE - 3,
-              r * SIZE - 3,
-              ELEMENTS[map[r][c]].width ?? SIZE + 6,
-              ELEMENTS[map[r][c]].height ?? SIZE + 6
-            );
-            ctx.restore();
-          }
+function drawBackGround(map, ELEMENTS) {
+  ctx.fillStyle = "hsl(34, 44%, 69%)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(bg, 0, 0, bg.width, bg.height);
+  ctx.save();
+  ctx.translate(142, 433);
+  for (let r = 0; r < LINE; r++) {
+    for (let c = 0; c < LINE; c++) {
+      if (map[r][c] && map[r][c] !== "X") {
+        if (ELEMENTS[map[r][c]].draw) {
+          ELEMENTS[map[r][c]].draw(ctx, r, c, SIZE);
+          continue;
+        }
+        ctx.globalAlpha = 1.0;
+        ctx.fillStyle = ELEMENTS[map[r][c]].color;
+        if (ELEMENTS[map[r][c]].img) {
+          ctx.save();
+          ELEMENTS[map[r][c]].filter();
+          ctx.drawImage(
+            ELEMENTS[map[r][c]].img,
+            (c + (ELEMENTS[map[r][c]].dc ?? 0)) * SIZE - 3,
+            r * SIZE - 3,
+            ELEMENTS[map[r][c]].width ?? SIZE + 6,
+            ELEMENTS[map[r][c]].height ?? SIZE + 6
+          );
+          ctx.restore();
         }
       }
     }
-    ctx.restore();
-    ctx.font = "bolder 24px Courier";
-    ctx.textAlign = "right";
-    ctx.fillStyle = "#48320f";
-    ctx.fillText("(" + SEED + ")", 1386, 398);
-    ctx.drawImage(shield, 637, 200);
   }
+  ctx.restore();
+  ctx.font = "bolder 24px Courier";
+  ctx.textAlign = "right";
+  ctx.fillStyle = "#48320f";
+  ctx.fillText("(" + SEED + ")", 1386, 398);
+  ctx.drawImage(shield, 637, 200);
+}
 
-  
-  function savePDF() {
-    var imgData = canvas.toDataURL("image/png");
-    var doc = new jsPDF("p", "mm", [359, 519]);
-    doc.addImage(imgData, "PNG", 0, 0, 126.7, 183);
-    doc.save(`map-${SEED}.pdf`);
-  }
-  function randomWalk(t) {
-    let r = random.randInt(0, 10);
-    let c = random.randInt(0, 10);
-    let nr = r;
-    let nc = c;
-    let d = random.randInt(0, 3);
-    let v = [
-      [1, 0],
-      [-1, 0],
-      [0, 1],
-      [0, -1],
-    ];
-    let vr = v[d][0];
-    let vc = v[d][1];
-    let placed = 0;
-    let s = 0;
-    let pd = d;
-    do {
-      d = random.randInt(0, 3);
-      vr = v[d][0];
-      vc = v[d][1];
-      nr = Math.max(Math.min(r + vr, 10), 0);
-      nc = Math.max(Math.min(c + vc, 10), 0);
-      s++;
-      if (pd == d || map[nr][nc] != "") {
-        continue;
-      }
-      r = nr;
-      c = nc;
-      map[r][c] = "C";
-      placed++;
-      pd = d;
-    } while (placed < t && s < 100);
-    return placed;
-  }
 
-  const tileSet = [
-    47,,1,,,,,,2,,3,4,,,,,5,,6,,,,7,,8,,9,10,,,11,12,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,13,,14,,,,,,15,,16,17,,,,,18,,19,,,,20,,21,,22,23,,,24,25,,,,,,,,,26,,27,28,,,,,,,,,,,,,29,,30,31,,,32,33,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,34,,35,,,,36,,37,,38,39,,,40,41,,,,,,,,,,,,,,,,,,,,,,,,,42,,43,44,,,45,46
+function savePDF() {
+  var imgData = canvas.toDataURL("image/png");
+  var doc = new jsPDF("p", "mm", [359, 519]);
+  doc.addImage(imgData, "PNG", 0, 0, 126.7, 183);
+  doc.save(`map-${SEED}.pdf`);
+}
+function randomWalk(t) {
+  let r = random.randInt(0, 10);
+  let c = random.randInt(0, 10);
+  let nr = r;
+  let nc = c;
+  let d = random.randInt(0, 3);
+  let v = [
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
   ];
+  let vr = v[d][0];
+  let vc = v[d][1];
+  let placed = 0;
+  let s = 0;
+  let pd = d;
+  do {
+    d = random.randInt(0, 3);
+    vr = v[d][0];
+    vc = v[d][1];
+    nr = Math.max(Math.min(r + vr, 10), 0);
+    nc = Math.max(Math.min(c + vc, 10), 0);
+    s++;
+    if (pd == d || map[nr][nc] != "") {
+      continue;
+    }
+    r = nr;
+    c = nc;
+    map[r][c] = "C";
+    placed++;
+    pd = d;
+  } while (placed < t && s < 100);
+  return placed;
+}
 
-  function drawCliff(ctx, r, c, SIZE) {
-    ctx.globalAlpha = 1.0;
-    /*
-    ctx.fillStyle = "hsl(34deg 34% 75%)";
-    ctx.fillRect(
-      c * SIZE,
-      r * SIZE,
-      SIZE,
-      SIZE
-      );*/
-    ctx.save();
-    ctx.globalCompositeOperation = "multiply";
-    
-    const NW =
-      r > 0 &&
+const tileSet = [
+  47, , 1, , , , , , 2, , 3, 4, , , , , 5, , 6, , , , 7, , 8, , 9, 10, , , 11, 12, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 13, , 14, , , , , , 15, , 16, 17, , , , , 18, , 19, , , , 20, , 21, , 22, 23, , , 24, 25, , , , , , , , , 26, , 27, 28, , , , , , , , , , , , , 29, , 30, 31, , , 32, 33, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 34, , 35, , , , 36, , 37, , 38, 39, , , 40, 41, , , , , , , , , , , , , , , , , , , , , , , , , 42, , 43, 44, , , 45, 46
+];
+
+function drawCliff(ctx, r, c, SIZE) {
+  ctx.globalAlpha = 1.0;
+  ctx.save();
+  ctx.globalCompositeOperation = "multiply";
+
+  const NW =
+    r > 0 &&
       c > 0 &&
       map[r - 1][c - 1] == "C" &&
       map[r - 1][c] == "C" &&
       map[r][c - 1] == "C"
-        ? 1
-        : 0;
-    const N = r > 0 && map[r - 1][c] == "C" ? 2 : 0;
-    const NE =
-      r > 0 &&
+      ? 1
+      : 0;
+  const N = r > 0 && map[r - 1][c] == "C" ? 2 : 0;
+  const NE =
+    r > 0 &&
       c < 10 &&
       map[r - 1][c + 1] == "C" &&
       map[r - 1][c] == "C" &&
       map[r][c + 1] == "C"
-        ? 4
-        : 0;
-    const E = c < 10 && map[r][c + 1] == "C" ? 16 : 0;
-    const W = c > 0 && map[r][c - 1] == "C" ? 8 : 0;
-    const SW =
-      r < 10 &&
+      ? 4
+      : 0;
+  const E = c < 10 && map[r][c + 1] == "C" ? 16 : 0;
+  const W = c > 0 && map[r][c - 1] == "C" ? 8 : 0;
+  const SW =
+    r < 10 &&
       c > 0 &&
       map[r + 1][c - 1] == "C" &&
       map[r + 1][c] == "C" &&
       map[r][c - 1] == "C"
-        ? 32
-        : 0;
-    const S = r < 10 && map[r + 1][c] == "C" ? 64 : 0;
-    const SE =
-      r < 10 &&
+      ? 32
+      : 0;
+  const S = r < 10 && map[r + 1][c] == "C" ? 64 : 0;
+  const SE =
+    r < 10 &&
       c < 10 &&
       map[r + 1][c + 1] == "C" &&
       map[r + 1][c] == "C" &&
       map[r][c + 1] == "C"
-        ? 128
-        : 0;
-    const tile = N + NW + W + SW + S + SE + E + NE;
+      ? 128
+      : 0;
+  const tile = N + NW + W + SW + S + SE + E + NE;
 
-    const tc = (tileSet[tile] ?? tile) % 8;
-    const tr = Math.floor((tileSet[tile] ?? tile) / 8);
+  const tc = (tileSet[tile] ?? tile) % 8;
+  const tr = Math.floor((tileSet[tile] ?? tile) / 8);
 
-    ctx.drawImage(
-      cliffTiles,
-      tc * 112,
-      tr * 112,
-      1 * 112,
-      1 * 112,
-      c * SIZE,
-      r * SIZE,
-      SIZE,
-      SIZE
-    );
-    ctx.restore();
-  }
-};
+  ctx.drawImage(
+    cliffTiles,
+    tc * 112,
+    tr * 112,
+    1 * 112,
+    1 * 112,
+    c * SIZE,
+    r * SIZE,
+    SIZE,
+    SIZE
+  );
+  ctx.restore();
+}
+
+
 
 function getRandomBySeed() {
   let seedHash;
@@ -378,12 +384,12 @@ function getRandomBySeed() {
     let minValue = 0;
     seedHash = Math.floor(Math.random() * (maxValue - minValue)) + minValue;
     let search = location.search;
-    if(!SEED){ 
+    if (!SEED) {
       search = `?map=${seedHash}`;
-      if (MOUNTAINS && MOUNTAINS !=5) {
+      if (MOUNTAINS && MOUNTAINS != 5) {
         search += `&mountains=${MOUNTAINS}`;
       }
-      if (RUINS && RUINS !=6) {
+      if (RUINS && RUINS != 6) {
         search += `&ruins=${RUINS}`;
       }
       if (CLIFFS) {

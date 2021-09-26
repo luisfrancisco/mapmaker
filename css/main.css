@@ -88,7 +88,7 @@ canvas {
   flex-wrap: wrap;
 }
 
-body p, body p a.share  {
+body p, body p a.share, details  {
   margin: 0.5cm auto 0 auto;
   text-align: center;
   color: #ffdd00;
@@ -106,6 +106,7 @@ footer, footer  a {
     "Lucida Sans", Arial, sans-serif;
   font-size: 0.6rem;
 }
+
 
 footer a{
   text-decoration: none;
@@ -202,6 +203,16 @@ footer a{
   background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgdmlld0JveD0iMCAwIDUxMiA1MTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHRpdGxlLz48ZyBkYXRhLW5hbWU9IjEiIGlkPSJfMSI+PHBhdGggZD0iTTM3OC44Myw0NTBIMTUwYTUwLjE3LDUwLjE3LDAsMCwxLTUwLjExLTUwLjExVjk4LjExQTUwLjE3LDUwLjE3LDAsMCwxLDE1MCw0OGgxNTAuMWExNSwxNSwwLDAsMSwxMC42MSw0LjM5TDQyNC41NSwxNjYuMjdhMTUsMTUsMCwwLDEsNC4zOSwxMC42MXYyMjNBNTAuMTcsNTAuMTcsMCwwLDEsMzc4LjgzLDQ1MFpNMTUwLDc4YTIwLjEzLDIwLjEzLDAsMCwwLTIwLjExLDIwLjExVjM5OS44OUEyMC4xMywyMC4xMywwLDAsMCwxNTAsNDIwSDM3OC44M2EyMC4xMywyMC4xMywwLDAsMCwyMC4xMS0yMC4xMVYxODMuMDlMMjkzLjg1LDc4WiIvPjxwYXRoIGQ9Ik00MTMuOTQsMTkxLjg4SDMzNS4xN2E1MC4xNyw1MC4xNywwLDAsMS01MC4xMS01MC4xMVY2M2ExNSwxNSwwLDAsMSwzMCwwdjc4Ljc3YTIwLjEzLDIwLjEzLDAsMCwwLDIwLjExLDIwLjExaDc4Ljc3YTE1LDE1LDAsMCwxLDAsMzBaIi8+PHBhdGggZD0iTTI2NC40LDM3NWExNSwxNSwwLDAsMS0xMC42MS00LjRsLTU0LjQ1LTU0LjQ0YTE1LDE1LDAsMSwxLDIxLjIxLTIxLjIybDQzLjg1LDQzLjg0LDQzLjg0LTQzLjg0YTE1LDE1LDAsMSwxLDIxLjIxLDIxLjIyTDI3NSwzNzAuNTVBMTUsMTUsMCwwLDEsMjY0LjQsMzc1WiIvPjxwYXRoIGQ9Ik0yNjQuNCwzNjVhMTUsMTUsMCwwLDEtMTUtMTVWMjMxYTE1LDE1LDAsMCwxLDMwLDBWMzUwQTE1LDE1LDAsMCwxLDI2NC40LDM2NVoiLz48L2c+PC9zdmc+")
     no-repeat left center transparent;
   background-size: 110% 110%;
+}
+
+input {
+  background-color: transparent;
+  color: #ffdd00;
+  font-size: 18px;
+  padding: 10px 30px;
+  border: 1px solid #ffdd00;
+  border-radius: 100px;
+
 }
 
 /*
