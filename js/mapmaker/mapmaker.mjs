@@ -95,29 +95,6 @@ window.onload = () => {
 
 function drawMap() {
   const ELEMENTS = {
-    R: {
-      total: RUINS,
-      color: "hsl(34, 44%, 29%)",
-      img: ruins,
-      filter: () => {
-        ctx.globalCompositeOperation = "color-burn";
-      },
-    },
-    M: {
-      total: MOUNTAINS,
-      color: "hsl(34, 0%, 29%)",
-      img: mountains,
-      filter: () => { },
-    },
-    C: {
-      total: CLIFFS,
-      color: "hsl(34, 64%, 89%)",
-      img: null,
-      filter: () => {
-        ctx.globalCompositeOperation = "multiply";
-      },
-      draw: drawCliff,
-    },
     B: {
       total: BIG,
       color: "hsl(34, 64%, 89%)",
@@ -129,6 +106,29 @@ function drawMap() {
     },
     L: {
       total: HEROES,
+      color: "hsl(34, 64%, 89%)",
+      img: null,
+      filter: () => {
+        ctx.globalCompositeOperation = "multiply";
+      },
+      draw: drawCliff,
+    },
+    M: {
+      total: MOUNTAINS,
+      color: "hsl(34, 0%, 29%)",
+      img: mountains,
+      filter: () => { },
+    },
+    R: {
+      total: RUINS,
+      color: "hsl(34, 44%, 29%)",
+      img: ruins,
+      filter: () => {
+        ctx.globalCompositeOperation = "color-burn";
+      },
+    },
+    C: {
+      total: CLIFFS,
       color: "hsl(34, 64%, 89%)",
       img: null,
       filter: () => {
