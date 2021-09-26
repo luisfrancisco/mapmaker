@@ -9,7 +9,7 @@ const mountains = new Image();
 mountains.src = "img/tiles/mountain.png";
 const params = new URLSearchParams(location.search);
 let SEED = params.get("map");
-const CLIFFS = Math.min(Math.max(params.get("cliffs") ?? 0, 0), 20);
+let CLIFFS = Math.min(Math.max(params.get("cliffs") ?? 0, 0), 20);
 const HEROES = Math.min(Math.max(params.get("heroes") ?? 0, 0), 1);
 const BIG = Math.min(Math.max(params.get("big") ?? 0, 0), 1);
 
@@ -36,6 +36,7 @@ window.onload = () => {
   const mapSeed = document.querySelector("#map-seed");
   const mapMountains = document.querySelector("#map-mountains");
   const mapRuins = document.querySelector("#map-ruins");
+  const mapCliffs = document.querySelector("#map-cliffs");
 
   if (SEED) {
     const nextSeed = Math.floor(Math.random() * (9999999999));
@@ -53,10 +54,11 @@ window.onload = () => {
     shareMap.href += `&ruins=${RUINS}`;
     mapRuins.value = RUINS;
   }
-
+  
   if (CLIFFS) {
     newMap.href += `&cliffs=${CLIFFS}`;
     shareMap.href += `&cliffs=${CLIFFS}`;
+    mapCliffs.value = CLIFFS;
   }
   if (BIG) {
     newMap.href += `&big=${BIG}`;
@@ -69,10 +71,10 @@ window.onload = () => {
 
   shareMap.textContent = shareMap.href;
   generate.addEventListener('click', (e) => {
-    console.log(mapSeed.value);
     SEED = mapSeed.value;
     MOUNTAINS = mapMountains.value;
     RUINS = mapRuins.value;
+    CLIFFS = mapCliffs.value;
     random = getRandomBySeed();
     drawMap();
   });
@@ -156,7 +158,7 @@ function drawMap() {
     if (k == "C") {
       let t = ELEMENTS[k].total;
       while (t > 0) {
-        t -= randomWalk(t);
+        t -= randomWalk(t, map);
       }
       continue;
     }
@@ -240,7 +242,7 @@ function drawBackGround(map, ELEMENTS) {
     for (let c = 0; c < LINE; c++) {
       if (map[r][c] && map[r][c] !== "X") {
         if (ELEMENTS[map[r][c]].draw) {
-          ELEMENTS[map[r][c]].draw(ctx, r, c, SIZE);
+          ELEMENTS[map[r][c]].draw(ctx, r, c, SIZE, map);
           continue;
         }
         ctx.globalAlpha = 1.0;
@@ -275,7 +277,7 @@ function savePDF() {
   doc.addImage(imgData, "PNG", 0, 0, 126.7, 183);
   doc.save(`map-${SEED}.pdf`);
 }
-function randomWalk(t) {
+function randomWalk(t, map) {
   let r = random.randInt(0, 10);
   let c = random.randInt(0, 10);
   let nr = r;
@@ -315,7 +317,7 @@ const tileSet = [
   47, , 1, , , , , , 2, , 3, 4, , , , , 5, , 6, , , , 7, , 8, , 9, 10, , , 11, 12, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 13, , 14, , , , , , 15, , 16, 17, , , , , 18, , 19, , , , 20, , 21, , 22, 23, , , 24, 25, , , , , , , , , 26, , 27, 28, , , , , , , , , , , , , 29, , 30, 31, , , 32, 33, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 34, , 35, , , , 36, , 37, , 38, 39, , , 40, 41, , , , , , , , , , , , , , , , , , , , , , , , , 42, , 43, 44, , , 45, 46
 ];
 
-function drawCliff(ctx, r, c, SIZE) {
+function drawCliff(ctx, r, c, SIZE, map) {
   ctx.globalAlpha = 1.0;
   ctx.save();
   ctx.globalCompositeOperation = "multiply";
