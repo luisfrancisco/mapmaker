@@ -188,6 +188,14 @@ function drawMap() {
           uc.add(c);
         }
       }
+      if (k === "R") {
+        if (ur.has(r) || uc.has(c)) {
+          continue;
+        } else {
+          ur.add(r);
+          uc.add(c);
+        }
+      }
       if (k === "L") {
         if (r === 10 || c === 10 || map[r][c + 1] || map[r + 1][c]) {
           continue;
