@@ -177,8 +177,8 @@ function drawMap() {
     let km = 0;
     while (total > 0 && km < 121) {
       km++;
-      const r = random.randInt(0, 10);
-      const c = random.randInt(0, 10);
+      const r = random.nextRandInt(0, 10);
+      const c = random.nextRandInt(0, 10);
       if (map[r][c]) continue;
       if (k === "M") {
         if (ur.has(r) || uc.has(c)) {
@@ -290,11 +290,11 @@ function savePDF() {
   doc.save(`map-${SEED}.pdf`);
 }
 function randomWalk(t, map) {
-  let r = random.randInt(0, 10);
-  let c = random.randInt(0, 10);
+  let r = random.nextRandInt(0, 10);
+  let c = random.nextRandInt(0, 10);
   let nr = r;
   let nc = c;
-  let d = random.randInt(0, 3);
+  let d = random.nextRandInt(0, 3);
   let v = [
     [1, 0],
     [-1, 0],
@@ -307,7 +307,7 @@ function randomWalk(t, map) {
   let s = 0;
   let pd = d;
   do {
-    d = random.randInt(0, 3);
+    d = random.nextRandInt(0, 3);
     vr = v[d][0];
     vc = v[d][1];
     nr = Math.max(Math.min(r + vr, 10), 0);
@@ -424,10 +424,7 @@ function getRandomBySeed() {
       location.search = search;
     }
   }
-  const seedGen = new seedGenerator({
-    seed_1: parseInt(seedHash, 36),
-    seed_2_string: seedHash,
-  });
+  const seedGen = new seedGenerator(seedHash, "sfc32");
 
   return seedGen;
 }
