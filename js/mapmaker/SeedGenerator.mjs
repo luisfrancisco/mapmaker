@@ -1,5 +1,5 @@
 export default class SeedGenerator {
-  constructor(seedString = "grok", method = "sin") {
+  constructor(seedString = "pcglab", method = "sin") {
     this.sinSeed = 1;
     this.method = method;
     // Create xmur3 state:
@@ -22,6 +22,21 @@ export default class SeedGenerator {
       return (h ^= h >>> 16) >>> 0;
     };
   }
+
+  nextRandFloat(min, max) {
+      switch (this.method) {
+        case "math":
+          return this.getRandomFloatMethodMath(min, max);
+        case "sin":
+          return this.getRandomFloatMethodSin(min, max);
+        case "sfc32":
+          return this.getRandomFloatMethodSFC32(min, max);
+        case "mulberry32":
+          return this.getRandomFloatMethodMulberry32(min, max);
+        default:
+          return this.getRandomFloatMethodSin(min, max);
+      }
+    }
 
   /**
    * Select next rand integer based on method
