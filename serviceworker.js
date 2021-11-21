@@ -6,11 +6,11 @@ const assets = [
 	'./manifest.json',
 
 	'./img/tiles/mountain.png',
-	'./img/bg/mapbase.png',
+	'./img/bg/mapbase_en.png',
 	'./img/bg/shield.png',
 	'./img/tiles/cliff-tiles.png',
 	'./img/tiles/ruin.png',
-  './img/LOGO.png',
+  './img/LOGOen.png',
 
 	'./css/main.css',
 	'./css/normalize.css',
