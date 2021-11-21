@@ -2,13 +2,13 @@
 <html class="no-js" lang="">
   <head>
     <meta charset="utf-8" />
-    <title>Cartographers Map Generator v0.1</title>
+    <title>Cartógrafos • Gerador de Mapas</title>
     <meta
       name="description"
-      content="Create random maps for your Cartographers game. Use ?map=XXXX on the url to create your own seeded map."
+      content="Crie mapas aleatórios para seu jogo de cartógrafos. Use ?map=XXXX na url para criar seu próprio mapa original."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:title" content="Cartographers Map Generator v0.1" />
+    <meta property="og:title" content="Cartógrafos • Gerador de Mapas" />
     <meta property="og:type" content="" />
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
@@ -46,17 +46,15 @@
         <div id="image">Your browser is an ancient relic. Update it!</div>
       </canvas>
     </div>
-    <p>Share this map with friends: <a class="share" href=""></a></p>
+    <p>Compartilhe com seus amigos: <a class="share" href=""></a></p>
     <details>
-      <summary>Options</summary>
+      <summary>Opções</summary>
       <div>
         <input type="text" name="map-seed" id="map-seed" placeholder="Map Seed" maxlength="9">
         <input type="number" name="map-mountains" id="map-mountains" tile="Number of Mountains" max="10" min="5">
         <input type="number" name="map-ruins" id="map-ruins" tile="Number of Ruins" max="10" min="6">
         <input type="number" name="map-cliffs" id="map-cliffs" tile="Number of Cliffs" max="20" min="0">
-        <label>Big Cliff <input type="checkbox" name="map-big" id="map-big" tile="Big Cliff"></label>
-        <label>Heroes Cliffs <input type="checkbox" name="map-heroes" id="map-heroes" tile="Heroes Cliffs"></label>
-        <button id="generate" class="button">Generate</button>
+        <button id="generate" class="button">Gerar</button>
       </div>
     </details>
     <footer>
