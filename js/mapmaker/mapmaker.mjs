@@ -136,7 +136,7 @@ function drawMap() {
       },
       draw: drawCliff,
     },
-    NS: {
+   /* NS: {
       total: HEROES,
       color: "hsl(34, 64%, 89%)",
       img: null,
@@ -153,7 +153,7 @@ function drawMap() {
         ctx.globalCompositeOperation = "multiply";
       },
       draw: drawCliff,
-    },
+    },*/
   };
 
   canvas.width = LINE * SIZE;

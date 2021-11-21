@@ -475,6 +475,10 @@ textarea {
     text-decoration: underline;
   }
 
+  a:hover {
+    color: #ffdd00;
+  }
+
   a[href]::after {
     content: " (" attr(href) ")";
   }
@@ -543,6 +547,7 @@ textarea {
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+  justify-content: center;
 }
 
 .form-inline label {
@@ -563,20 +568,13 @@ textarea {
   border-radius: 8px;
 }
 
-#generate{
-  margin-left: 30px !important;
-  }
-
 
 
 @media (max-width: 800px) {
   .form-inline input {
     margin: 10px 0;
   }
-  
-  #generate{
-  margin-left: 0px !important;
-  }
+
 
   .form-inline label {
     margin: 10px 0;
