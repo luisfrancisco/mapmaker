@@ -186,6 +186,27 @@ footer a{
     no-repeat left center transparent;
   background-size: 100% 100%;
 }
+
+.button.editmap:before {
+  content: "\0000a0";
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  margin: 0 4px -6px -4px;
+  position: relative;
+  top: 0px;
+  left: -5px;
+  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI2LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCAyMzUuNyAyNTAuNSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjM1LjcgMjUwLjU7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4KCS5zdDB7ZmlsbDojMDEwMTAxO30KPC9zdHlsZT4KPGc+Cgk8Zz4KCQk8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjA4LjYsMjMuNkMyMDguNiwyMy42LDIwOC41LDIzLjYsMjA4LjYsMjMuNkMyMDguNSwyMy42LDIwOC41LDIzLjYsMjA4LjYsMjMuNgoJCQlDMjA4LjUsMjMuNiwyMDguNSwyMy42LDIwOC42LDIzLjZjLTAuMy0wLjctMC44LTEuMy0xLjMtMS44Yy0wLjEtMC4xLTAuMi0wLjItMC4zLTAuM2MtMC41LTAuNC0xLjEtMC44LTEuOC0xLjEKCQkJYy0wLjEtMC4xLTAuMy0wLjEtMC40LTAuMWMtMC4zLTAuMS0wLjUtMC4yLTAuOC0wLjJjLTAuNC0wLjEtMTEtMS44LTI2LjctMS44Yy0xMC43LDAtMjEuMSwwLjgtMzEuMSwyLjQKCQkJYy0xMy4yLDIuMS0yNS42LDUuNi0zNi42LDEwLjRDNzYuMSw0NS42LDM2LjksODAsMzkuNiwxNjEuNmMwLDAuMiwwLjEsMC4zLDAuMSwwLjVjLTcuMSwxMS45LTEzLjMsMjQuNC0xOC40LDM3LjcKCQkJYy0xLjIsMy4yLDAuNCw2LjgsMy42LDguMWMwLjcsMC4zLDEuNSwwLjQsMi4yLDAuNGMyLjUsMCw0LjktMS41LDUuOC00YzQuNy0xMi4yLDEwLjUtMjMuOCwxNy0zNC45YzEwLjcsMy40LDMzLjYsOS41LDU5LjksOS41CgkJCWMxMi44LDAsMjQuOS0xLjUsMzYtNC40YzIuNy0wLjcsNC42LTMuMSw0LjctNS45bDEuMy00Mi43bDMwLDExLjdjMi44LDEuMSw2LDAsNy42LTIuNkMyMjksNjkuNiwyMDkuNCwyNS40LDIwOC42LDIzLjZ6CgkJCSBNMTE0LjUsNDIuNmMxMC4xLTQuNCwyMS40LTcuNiwzMy42LTkuNmM5LjMtMS41LDE5LjEtMi4yLDI5LjEtMi4yYzEuMiwwLDIuNCwwLDMuNSwwLjFjLTI5LjksMTctODcuNyw1NC43LTEyOC41LDExMS45CgkJCUM1NC45LDkzLjEsNzUuNyw1OS40LDExNC41LDQyLjZ6IE0xODEuNCwxMjMuOUwxNDguMSwxMTFjLTEuOS0wLjctNC0wLjUtNS43LDAuNmMtMS43LDEuMS0yLjcsMy0yLjgsNWwtMS40LDQ2LjgKCQkJYy04LjgsMS45LTE4LjMsMi45LTI4LjMsMi45Yy0yMi4yLDAtNDIuMS00LjgtNTMtOEMxMDIuNyw4OS4zLDE3Ny4xLDQ2LjcsMTk5LjIsMzUuMUMyMDIuNCw0OC4xLDIwNi4yLDgwLjUsMTgxLjQsMTIzLjl6Ii8+CgkJPHBhdGggY2xhc3M9InN0MCIgZD0iTTEyOS40LDIyMUg3MC43bDYuNS05LjFjMS40LTEuOSwxLjUtNC40LDAuNS02LjVjLTEuMS0yLjEtMy4yLTMuNC01LjYtMy40SDQ1LjFjLTMuNSwwLTYuMiwyLjgtNi4yLDYuMgoJCQljMCwzLjUsMi44LDYuMiw2LjIsNi4yaDE1bC02LjUsOS4xYy0xLjQsMS45LTEuNSw0LjQtMC41LDYuNWMxLjEsMi4xLDMuMiwzLjQsNS42LDMuNGg3MC44YzMuNSwwLDYuMi0yLjgsNi4yLTYuMgoJCQlDMTM1LjcsMjIzLjgsMTMyLjksMjIxLDEyOS40LDIyMXoiLz4KCTwvZz4KPC9nPgo8L3N2Zz4K")
+    no-repeat left center transparent;
+    background-size: 111% 110%;
+    background-position-y: -2
+px
+;
+}
+
+
+
 .button.print:before {
   content: "\0000a0";
   display: inline-block;
@@ -414,6 +435,19 @@ textarea {
     left: 0px;
     margin: auto;
   }
+
+  .button.editmap:before {
+    content: "\0000a0";
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    margin: auto;
+  }
+
   .button.pdf:before {
     content: "\0000a0";
     display: inline-block;
@@ -545,12 +579,16 @@ textarea {
 
 .form-inline {  
   display: flex;
-  flex-flow: row wrap;
-  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
+  align-content: center
+
 }
 
 .form-inline label {
+  flex: 0 0 auto;
   margin: 5px 10px 5px 0;
   color:#ffdd00 ;
   font-size: 0.8rem;
@@ -560,6 +598,7 @@ textarea {
 .form-inline ::placeholder { color: #295285;}
 
 .form-inline input {
+  flex: 0 0 auto;
   vertical-align: middle;
   margin: 5px 5px 5px 0;
   padding: 10px 0px 10px 20px !important;
@@ -573,16 +612,24 @@ textarea {
 @media (max-width: 800px) {
   .form-inline input {
     margin: 10px 0;
+    text-align: center;
+    padding: 10px 0px !important;
+    width: 250px;
+    
   }
 
 
   .form-inline label {
-    margin: 10px 0;
+    margin: 20px 10px 0px 10px;display: contents
  
   }
 
   .form-inline {
     flex-direction: column;
+    align-content: flex-start;
     align-items: stretch;
+    height: 500px;
+    justify-content: center;
+    
   }
 }
