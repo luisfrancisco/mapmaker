@@ -10,8 +10,8 @@ mountains.src = "img/tiles/mountain.png";
 const params = new URLSearchParams(location.search);
 let SEED = params.get("map");
 let CLIFFS = Math.min(Math.max(params.get("cliffs") ?? 0, 0), 20);
-/*let HEROES = Math.min(Math.max(params.get("heroes") ?? 0, 0), 1);
-let BIG = Math.min(Math.max(params.get("big") ?? 0, 0), 1);*/
+let HEROES = Math.min(Math.max(params.get("heroes") ?? 0, 0), 1);
+let BIG = Math.min(Math.max(params.get("big") ?? 0, 0), 1);
 
 let random = getRandomBySeed();
 MOUNTAINS =
@@ -37,8 +37,8 @@ window.onload = () => {
   const mapMountains = document.querySelector("#map-mountains");
   const mapRuins = document.querySelector("#map-ruins");
   const mapCliffs = document.querySelector("#map-cliffs");
- /* const mapBig = document.querySelector("#map-big");
-  const mapHeroes = document.querySelector("#map-heroes");*/
+  const mapBig = document.querySelector("#map-big");
+  const mapHeroes = document.querySelector("#map-heroes");
 
   function updateURL() {
 
@@ -64,16 +64,16 @@ window.onload = () => {
       shareMap.href += `&cliffs=${CLIFFS}`;
       mapCliffs.value = CLIFFS || 0;
     }
-   /* if (BIG) {
+    if (BIG) {
       newMap.href += `&big=${BIG}`;
       shareMap.href += `&big=${BIG}`;
     }
-    mapBig.checked = BIG > 0;
+    //mapBig.checked = BIG > 0;
     if (HEROES) {
       newMap.href += `&heroes=${HEROES}`;
       shareMap.href += `&heroes=${HEROES}`;
     }
-    mapHeroes.checked = HEROES > 0;*/
+    //mapHeroes.checked = HEROES > 0;
 
     shareMap.textContent = shareMap.href;
   }
@@ -83,8 +83,8 @@ window.onload = () => {
     MOUNTAINS = mapMountains.value;
     RUINS = mapRuins.value;
     CLIFFS = mapCliffs.value;
-   /* BIG = mapBig.checked ? 1 : 0;
-    HEROES = mapHeroes.checked ? 1 : 0;*/
+    BIG = 0;//mapBig.checked ? 1 : 0;
+    HEROES = 0;//mapHeroes.checked ? 1 : 0;
     random = getRandomBySeed();
     updateURL();
     drawMap();
@@ -95,7 +95,7 @@ window.onload = () => {
 
 function drawMap() {
   const ELEMENTS = {
-   /* B: {
+    B: {
       total: BIG,
       color: "hsl(34, 64%, 89%)",
       img: null,
@@ -112,7 +112,7 @@ function drawMap() {
         ctx.globalCompositeOperation = "multiply";
       },
       draw: drawCliff,
-    },*/
+    },
     M: {
       total: MOUNTAINS,
       color: "hsl(34, 0%, 29%)",
@@ -136,7 +136,7 @@ function drawMap() {
       },
       draw: drawCliff,
     },
-   /* NS: {
+    NS: {
       total: HEROES,
       color: "hsl(34, 64%, 89%)",
       img: null,
@@ -153,7 +153,7 @@ function drawMap() {
         ctx.globalCompositeOperation = "multiply";
       },
       draw: drawCliff,
-    },*/
+    },
   };
 
   canvas.width = LINE * SIZE;
@@ -422,13 +422,13 @@ function getRandomBySeed() {
       }
       if (CLIFFS) {
         search += `&cliffs=${CLIFFS}`;
-      }/*
+      }
       if (BIG) {
         search += `&big=${BIG}`;
       }
       if (HEROES) {
         search += `&heroes=${HEROES}`;
-      }*/
+      }
       location.search = search;
     }
   }
