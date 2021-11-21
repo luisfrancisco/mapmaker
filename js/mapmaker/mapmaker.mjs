@@ -2,7 +2,7 @@ import seedGenerator from "./SeedGenerator.mjs";
 let MOUNTAINS;
 let RUINS;
 const bg = new Image();
-bg.src = "img/bg/mapbase.png";
+bg.src = "img/bg/mapbase_en.png";
 const ruins = new Image();
 ruins.src = "img/tiles/ruin.png";
 const mountains = new Image();
