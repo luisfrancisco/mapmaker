@@ -2,13 +2,13 @@
 <html class="no-js" lang="">
   <head>
     <meta charset="utf-8" />
-    <title>Cartógrafos • Gerador de Mapas</title>
+    <title>Cartographers • Map Generator</title>
     <meta
       name="description"
-      content="Crie mapas aleatórios para seu jogo de cartógrafos. Use ?map=XXXX na url para criar seu próprio mapa original."
+      content="Create random maps for your Cartographers game. Use ?map=XXXX on the url to create your own seeded map."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:title" content="Cartógrafos • Gerador de Mapas" />
+    <meta property="og:title" content="Cartographers • Map Generator" />
     <meta property="og:type" content="" />
     <meta property="og:url" content="" />
     <meta property="og:image" content="" />
@@ -31,13 +31,13 @@
 
     <div class="actions">
       <a class="button print no-print" onclick="print()"
-        ><span class="btn-text">Imprimir!</span></a
+        ><span class="btn-text">Print!</span></a
       >
       <a class="button pdf no-print" id="pdf"
-        ><span class="btn-text">Salvar PDF</span></a
+        ><span class="btn-text">Save PDF</span></a
       >
       <a class="button newmap no-print" href="?map="
-        ><span class="btn-text">Novo Mapa</span></a
+        ><span class="btn-text">New Map</span></a
       >
     </div>
 
@@ -46,19 +46,19 @@
         <div id="image">Your browser is an ancient relic. Update it!</div>
       </canvas>
     </div>
-    <p class="no-print">Compartilhe com seus amigos: <a class="share" href=""></a></p>
+    <p class="no-print">Share with your friends: <a class="share" href=""></a></p>
     
       
       <div id="options" class="form-inline no-print">
-                <label for="map-seed">Semente:</label><br>
+                <label for="map-seed">Seed:</label><br>
                 <input type="text" name="map-seed" id="map-seed" placeholder="" maxlength="9" size="11">
-                <label for="map-mountains">Montanhas:</label><br>
+                <label for="map-mountains">Mountains:</label><br>
                 <input type="number" name="map-mountains" id="map-mountains" tile="Number of Mountains" max="10" min="5" size="2">
-                <label for="map-ruins">Ruínas:</label><br>
+                <label for="map-ruins">Ruins:</label><br>
                 <input type="number" name="map-ruins" id="map-ruins" tile="Number of Ruins" max="10" min="6" size="2">
-                <label for="map-cliffs">Abismos:</label><br>
+                <label for="map-cliffs">Wastelands:</label><br>
                 <input type="number" name="map-cliffs" id="map-cliffs" tile="Number of Cliffs" max="20" min="0" size="2">
-                <button id="generate" class="button editmap">Editar</button>
+                <button id="generate" class="button editmap">Edit</button>
         </div>
     
  
