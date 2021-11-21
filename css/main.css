@@ -22,6 +22,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande";
 }
 header {
   margin: auto;
@@ -48,6 +49,8 @@ canvas {
   overflow: hidden;
   position: relative;
 }
+
+#options { margin-top: 25px; color: #6baaf7;}
 
 .logo {
   width: 50%;
@@ -91,20 +94,27 @@ canvas {
 body p, body p a.share, details  {
   margin: 0.5cm auto 0 auto;
   text-align: center;
-  color: #ffdd00;
+  color: #6baaf7;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-  font-size: 0.6rem;
-  font-weight: bold;
+  font-size: 1rem;
+
+}
+
+
+footer p  {
+
+  font-size: 0.8rem ;
+  color: #295285;
 }
 
 footer, footer  a {
   margin-top: 0.5cm;
   text-align: center;
-  color: #2c64a9;
+  color: #295285;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
 }
 
 
@@ -526,5 +536,55 @@ textarea {
     transform: scale(1);
     width: 12.67cm;
     height: 18.3cm;
+  }
+}
+
+.form-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 0;
+  color:#ffdd00 ;
+  font-size: 0.8rem;
+  padding: 10px 0px 10px 20px;
+}
+
+.form-inline ::placeholder { color: #295285;}
+
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 5px 5px 0;
+  padding: 10px 0px 10px 20px !important;
+  background-color: transparent;
+  border: 1px solid #295285;
+  border-radius: 8px;
+}
+
+#generate{
+  margin-left: 30px !important;
+  }
+
+
+
+@media (max-width: 800px) {
+  .form-inline input {
+    margin: 10px 0;
+  }
+  
+  #generate{
+  margin-left: 0px !important;
+  }
+
+  .form-inline label {
+    margin: 10px 0;
+ 
+  }
+
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
