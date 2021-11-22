@@ -80,9 +80,9 @@ window.onload = () => {
 
   generate.addEventListener('click', (e) => {
     SEED = mapSeed.value;
-    MOUNTAINS = mapMountains.value;
-    RUINS = mapRuins.value;
-    CLIFFS = mapCliffs.value;
+    MOUNTAINS = Math.min(Math.max(mapMountains.value ?? 0, 5), 10);
+    RUINS = Math.min(Math.max(mapRuins.value ?? 0, 6), 10);
+    CLIFFS = Math.min(Math.max(mapCliffs.value ?? 0, 0), 20);
     BIG = 0;//mapBig.checked ? 1 : 0;
     HEROES = 0;//mapHeroes.checked ? 1 : 0;
     random = getRandomBySeed();
