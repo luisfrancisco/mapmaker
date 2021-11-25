@@ -27,9 +27,9 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 const LINE = 11; //number of cells per column/row
 const SIZE = 110.5; //cell size
-
+const btnSavePDF = document.querySelector("#pdf");
 window.onload = () => {
-  document.querySelector("#pdf").addEventListener("click", savePDF);
+  btnSavePDF.addEventListener("click", savePDF);
   const newMap = document.querySelector(".newmap");
   const shareMap = document.querySelector(".share");
   const generate = document.querySelector("#generate");
@@ -88,6 +88,7 @@ window.onload = () => {
     random = getRandomBySeed();
     updateURL();
     drawMap();
+    window.scrollTo({ top: btnSavePDF.clientTop, behavior: 'smooth' });
   });
   updateURL();
   drawMap();
