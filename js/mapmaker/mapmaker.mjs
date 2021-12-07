@@ -17,8 +17,7 @@ let BIG = Math.min(Math.max(params.get("big") ?? 0, 0), 1);
 let lowInk = false;
 
 let random = getRandomBySeed();
-MOUNTAINS =
-Math.min(Math.max(params.get("mountains") ?? 0, 5), 10);
+MOUNTAINS = Math.min(Math.max(params.get("mountains") ?? 0, 5), 10);
 
 RUINS = Math.min(Math.max(params.get("ruins") ?? 0, 6), 10);
 
@@ -46,17 +45,16 @@ window.onload = () => {
   const mapBig = document.querySelector("#map-big");
   const mapHeroes = document.querySelector("#map-heroes");
   const lowInkChk = document.querySelector("#low-ink");
-  lowInkChk.addEventListener("change", (e)=>{
+  lowInkChk.addEventListener("change", (e) => {
     lowInk = lowInkChk.checked;
     random = getRandomBySeed();
     updateURL();
     drawMap();
   });
-  
+
   function updateURL() {
-    
     if (SEED) {
-      const nextSeed = Math.floor(Math.random() * (9999999999));
+      const nextSeed = Math.floor(Math.random() * 9999999999);
       newMap.href = `./?map=${nextSeed}`;
       shareMap.href = `./?map=${SEED}`;
     }
@@ -91,17 +89,17 @@ window.onload = () => {
     shareMap.textContent = shareMap.href;
   }
 
-  generate.addEventListener('click', (e) => {
+  generate.addEventListener("click", (e) => {
     SEED = mapSeed.value;
     MOUNTAINS = Math.min(Math.max(mapMountains.value ?? 0, 5), 10);
     RUINS = Math.min(Math.max(mapRuins.value ?? 0, 6), 10);
     CLIFFS = Math.min(Math.max(mapCliffs.value ?? 0, 0), 20);
-    BIG = 0;//mapBig.checked ? 1 : 0;
-    HEROES = 0;//mapHeroes.checked ? 1 : 0;
+    BIG = 0; //mapBig.checked ? 1 : 0;
+    HEROES = 0; //mapHeroes.checked ? 1 : 0;
     random = getRandomBySeed();
     updateURL();
     drawMap();
-    window.scrollTo({ top: btnSavePDF.clientTop, behavior: 'smooth' });
+    window.scrollTo({ top: btnSavePDF.clientTop, behavior: "smooth" });
   });
   updateURL();
   drawMap();
@@ -131,14 +129,15 @@ function drawMap() {
       total: MOUNTAINS,
       color: "hsl(34, 0%, 29%)",
       img: mountains,
-      filter: () => { },
+      filter: () => {},
     },
     R: {
       total: RUINS,
       color: "hsl(34, 44%, 29%)",
       img: ruins,
       filter: () => {
-        if(!lowInk) ctx.globalCompositeOperation = "color-burn";
+        if (!lowInk) ctx.globalCompositeOperation = "color-burn";
+        else ctx.filter = "saturate(0%) opacity(60%)";
       },
     },
     C: {
@@ -146,7 +145,7 @@ function drawMap() {
       color: "hsl(34, 64%, 89%)",
       img: null,
       filter: () => {
-        if(!lowInk) ctx.globalCompositeOperation = "multiply";
+        if (!lowInk) ctx.globalCompositeOperation = "multiply";
       },
       draw: drawCliff,
     },
@@ -155,7 +154,7 @@ function drawMap() {
       color: "hsl(34, 64%, 89%)",
       img: null,
       filter: () => {
-        if(!lowInk) ctx.globalCompositeOperation = "multiply";
+        if (!lowInk) ctx.globalCompositeOperation = "multiply";
       },
       draw: drawCliff,
     },
@@ -164,7 +163,7 @@ function drawMap() {
       color: "hsl(34, 64%, 89%)",
       img: null,
       filter: () => {
-        if(!lowInk) ctx.globalCompositeOperation = "multiply";
+        if (!lowInk) ctx.globalCompositeOperation = "multiply";
       },
       draw: drawCliff,
     },
@@ -267,12 +266,12 @@ function drawMap() {
 }
 
 function drawBackGround(map, ELEMENTS) {
-  if(lowInk) {
+  if (lowInk) {
     ctx.filter = "grayscale(1)";
   }
   ctx.fillStyle = "hsl(34, 44%, 69%)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(lowInk?bg2:bg, 0, 0, bg.width, bg.height);
+  ctx.drawImage(lowInk ? bg2 : bg, 0, 0, bg.width, bg.height);
   ctx.save();
   ctx.translate(142, 433);
   for (let r = 0; r < LINE; r++) {
@@ -304,9 +303,8 @@ function drawBackGround(map, ELEMENTS) {
   ctx.textAlign = "right";
   ctx.fillStyle = "#48320f";
   ctx.fillText("(" + SEED + ")", 1386, 398);
-  ctx.drawImage(lowInk?shield2:shield, 637, 200);
+  ctx.drawImage(lowInk ? shield2 : shield, 637, 200);
 }
-
 
 function savePDF() {
   var imgData = canvas.toDataURL("image/png");
@@ -351,7 +349,262 @@ function randomWalk(t, map) {
 }
 
 const tileSet = [
-  47, , 1, , , , , , 2, , 3, 4, , , , , 5, , 6, , , , 7, , 8, , 9, 10, , , 11, 12, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 13, , 14, , , , , , 15, , 16, 17, , , , , 18, , 19, , , , 20, , 21, , 22, 23, , , 24, 25, , , , , , , , , 26, , 27, 28, , , , , , , , , , , , , 29, , 30, 31, , , 32, 33, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , 34, , 35, , , , 36, , 37, , 38, 39, , , 40, 41, , , , , , , , , , , , , , , , , , , , , , , , , 42, , 43, 44, , , 45, 46
+  47,
+  ,
+  1,
+  ,
+  ,
+  ,
+  ,
+  ,
+  2,
+  ,
+  3,
+  4,
+  ,
+  ,
+  ,
+  ,
+  5,
+  ,
+  6,
+  ,
+  ,
+  ,
+  7,
+  ,
+  8,
+  ,
+  9,
+  10,
+  ,
+  ,
+  11,
+  12,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  13,
+  ,
+  14,
+  ,
+  ,
+  ,
+  ,
+  ,
+  15,
+  ,
+  16,
+  17,
+  ,
+  ,
+  ,
+  ,
+  18,
+  ,
+  19,
+  ,
+  ,
+  ,
+  20,
+  ,
+  21,
+  ,
+  22,
+  23,
+  ,
+  ,
+  24,
+  25,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  26,
+  ,
+  27,
+  28,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  29,
+  ,
+  30,
+  31,
+  ,
+  ,
+  32,
+  33,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  34,
+  ,
+  35,
+  ,
+  ,
+  ,
+  36,
+  ,
+  37,
+  ,
+  38,
+  39,
+  ,
+  ,
+  40,
+  41,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  ,
+  42,
+  ,
+  43,
+  44,
+  ,
+  ,
+  45,
+  46,
 ];
 
 function drawCliff(ctx, r, c, SIZE, map) {
@@ -361,38 +614,38 @@ function drawCliff(ctx, r, c, SIZE, map) {
 
   const NW =
     r > 0 &&
-      c > 0 &&
-      map[r - 1][c - 1] == "C" &&
-      map[r - 1][c] == "C" &&
-      map[r][c - 1] == "C"
+    c > 0 &&
+    map[r - 1][c - 1] == "C" &&
+    map[r - 1][c] == "C" &&
+    map[r][c - 1] == "C"
       ? 1
       : 0;
   const N = r > 0 && map[r - 1][c] == "C" ? 2 : 0;
   const NE =
     r > 0 &&
-      c < 10 &&
-      map[r - 1][c + 1] == "C" &&
-      map[r - 1][c] == "C" &&
-      map[r][c + 1] == "C"
+    c < 10 &&
+    map[r - 1][c + 1] == "C" &&
+    map[r - 1][c] == "C" &&
+    map[r][c + 1] == "C"
       ? 4
       : 0;
   const E = c < 10 && map[r][c + 1] == "C" ? 16 : 0;
   const W = c > 0 && map[r][c - 1] == "C" ? 8 : 0;
   const SW =
     r < 10 &&
-      c > 0 &&
-      map[r + 1][c - 1] == "C" &&
-      map[r + 1][c] == "C" &&
-      map[r][c - 1] == "C"
+    c > 0 &&
+    map[r + 1][c - 1] == "C" &&
+    map[r + 1][c] == "C" &&
+    map[r][c - 1] == "C"
       ? 32
       : 0;
   const S = r < 10 && map[r + 1][c] == "C" ? 64 : 0;
   const SE =
     r < 10 &&
-      c < 10 &&
-      map[r + 1][c + 1] == "C" &&
-      map[r + 1][c] == "C" &&
-      map[r][c + 1] == "C"
+    c < 10 &&
+    map[r + 1][c + 1] == "C" &&
+    map[r + 1][c] == "C" &&
+    map[r][c + 1] == "C"
       ? 128
       : 0;
   const tile = N + NW + W + SW + S + SE + E + NE;
@@ -413,8 +666,6 @@ function drawCliff(ctx, r, c, SIZE, map) {
   );
   ctx.restore();
 }
-
-
 
 function getRandomBySeed() {
   let seedHash;
