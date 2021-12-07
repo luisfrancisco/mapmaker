@@ -3,6 +3,8 @@ let MOUNTAINS;
 let RUINS;
 const bg = new Image();
 bg.src = "img/bg/mapbase_en.png";
+const bg2 = new Image();
+bg2.src = "img/bg/mapbaselow_en.png";
 const ruins = new Image();
 ruins.src = "img/tiles/ruin.png";
 const mountains = new Image();
@@ -12,15 +14,18 @@ let SEED = params.get("map");
 let CLIFFS = Math.min(Math.max(params.get("cliffs") ?? 0, 0), 20);
 let HEROES = Math.min(Math.max(params.get("heroes") ?? 0, 0), 1);
 let BIG = Math.min(Math.max(params.get("big") ?? 0, 0), 1);
+let lowInk = false;
 
 let random = getRandomBySeed();
 MOUNTAINS =
-  Math.min(Math.max(params.get("mountains") ?? 0, 5), 10);
+Math.min(Math.max(params.get("mountains") ?? 0, 5), 10);
 
 RUINS = Math.min(Math.max(params.get("ruins") ?? 0, 6), 10);
 
 const shield = new Image();
 shield.src = "img/bg/shield.png";
+const shield2 = new Image();
+shield2.src = "img/bg/shieldlow.png";
 const cliffTiles = new Image();
 cliffTiles.src = "img/tiles/cliff-tiles.png";
 const canvas = document.querySelector("canvas");
@@ -40,9 +45,16 @@ window.onload = () => {
   const mapCliffs = document.querySelector("#map-cliffs");
   const mapBig = document.querySelector("#map-big");
   const mapHeroes = document.querySelector("#map-heroes");
-
+  const lowInkChk = document.querySelector("#low-ink");
+  lowInkChk.addEventListener("change", (e)=>{
+    lowInk = lowInkChk.checked;
+    random = getRandomBySeed();
+    updateURL();
+    drawMap();
+  });
+  
   function updateURL() {
-
+    
     if (SEED) {
       const nextSeed = Math.floor(Math.random() * (9999999999));
       newMap.href = `./?map=${nextSeed}`;
@@ -126,7 +138,7 @@ function drawMap() {
       color: "hsl(34, 44%, 29%)",
       img: ruins,
       filter: () => {
-        ctx.globalCompositeOperation = "color-burn";
+        if(!lowInk) ctx.globalCompositeOperation = "color-burn";
       },
     },
     C: {
@@ -134,7 +146,7 @@ function drawMap() {
       color: "hsl(34, 64%, 89%)",
       img: null,
       filter: () => {
-        ctx.globalCompositeOperation = "multiply";
+        if(!lowInk) ctx.globalCompositeOperation = "multiply";
       },
       draw: drawCliff,
     },
@@ -143,7 +155,7 @@ function drawMap() {
       color: "hsl(34, 64%, 89%)",
       img: null,
       filter: () => {
-        ctx.globalCompositeOperation = "multiply";
+        if(!lowInk) ctx.globalCompositeOperation = "multiply";
       },
       draw: drawCliff,
     },
@@ -152,7 +164,7 @@ function drawMap() {
       color: "hsl(34, 64%, 89%)",
       img: null,
       filter: () => {
-        ctx.globalCompositeOperation = "multiply";
+        if(!lowInk) ctx.globalCompositeOperation = "multiply";
       },
       draw: drawCliff,
     },
@@ -255,9 +267,12 @@ function drawMap() {
 }
 
 function drawBackGround(map, ELEMENTS) {
+  if(lowInk) {
+    ctx.filter = "grayscale(1)";
+  }
   ctx.fillStyle = "hsl(34, 44%, 69%)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(bg, 0, 0, bg.width, bg.height);
+  ctx.drawImage(lowInk?bg2:bg, 0, 0, bg.width, bg.height);
   ctx.save();
   ctx.translate(142, 433);
   for (let r = 0; r < LINE; r++) {
@@ -289,7 +304,7 @@ function drawBackGround(map, ELEMENTS) {
   ctx.textAlign = "right";
   ctx.fillStyle = "#48320f";
   ctx.fillText("(" + SEED + ")", 1386, 398);
-  ctx.drawImage(shield, 637, 200);
+  ctx.drawImage(lowInk?shield2:shield, 637, 200);
 }
 
 
