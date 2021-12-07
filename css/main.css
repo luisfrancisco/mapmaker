@@ -617,11 +617,18 @@ textarea {
     width: 250px;
     
   }
-
+  .form-inline input#low-ink {
+    width: 50px;
+  }
 
   .form-inline label {
-    margin: 20px 10px 0px 10px;display: contents
- 
+    margin: 20px 10px 0px 10px; display: contents;
+  }
+
+
+  .form-inline label[for="low-ink"] {
+    margin: 20px 10px 0px 10px; display: contents;
+    width: 50px;
   }
 
   .form-inline {
